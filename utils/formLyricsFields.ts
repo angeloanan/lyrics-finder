@@ -67,7 +67,6 @@ export function validateEmbedField (fields: EmbedField[]): EmbedField[] {
 }
 
 export async function makeLyricsEmbedField (lyrics: string): Promise<EmbedField[]> {
-  console.log('Found Original Lyrics', lyrics)
   // Output variable
   const fields: EmbedField[] = []
   const sections = makeSectionsArray(lyrics)
@@ -81,10 +80,6 @@ export async function makeLyricsEmbedField (lyrics: string): Promise<EmbedField[
 
       // Safely trim section lyrics
       sectionLyrics = safeTrim(sectionLyrics, '\u200B')
-
-      // FIXME: Debugging
-      console.log('Section Header:', sectionTitle)
-      console.log('Section Lyrics:', sectionLyrics)
 
       // Split lyrics every 1024 char by '\n' and pushes to output
       splitMessage(sectionLyrics, splitOptions)

@@ -47,7 +47,6 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
     const song = searchResult.response.hits[0].result
     const scraper = scrape(song.url) // Concurrency
 
-    console.log('Searched for song:', song.title)
     fillBarebonesEmbed(response, song)
 
     scraper.then(async lyrics => {
@@ -56,12 +55,10 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
 
       const finalEmbedFields = await makeLyricsEmbedField(lyrics)
       const finalSongEmbed = response.embeds[0]
-      console.log(finalEmbedFields) // FIXME: Debugging
 
       finalSongEmbed.spliceFields(0, 1, finalEmbedFields)
 
       response.edit(finalSongEmbed)
-      console.log('-------------------\n\n\n\n\n')
     })
   }).catch(err => {
     response.channel.send('Error\n' + err.toString())
