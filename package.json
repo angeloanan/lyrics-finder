@@ -39,11 +39,15 @@
     "quick.db": "^7.1.1",
     "typescript": "^3.9.3",
     "utf-8-validate": "^5.0.2",
-    "zlib-sync": "^0.1.6"
+    "zlib-sync": "^0.1.6",
+    "snyk": "^1.330.3"
   },
   "scripts": {
     "test": "jest --coverage",
     "start": "ts-node .",
-    "profiler": "tsc && node ./target/index.js --harmony --prof"
-  }
+    "profiler": "tsc && node ./target/index.js --harmony --prof",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
+  },
+  "snyk": true
 }
