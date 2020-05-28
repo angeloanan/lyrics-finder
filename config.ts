@@ -4,6 +4,7 @@ import type { ClientOptions } from 'discord.js'
 export const regex = /(\[[^\]]+\])\n?([^[\]]+)?/gm
 
 export const clientOpts: ClientOptions = {
+  shards: 'auto',
   messageCacheMaxSize: 5,
   messageSweepInterval: 60,
   messageCacheLifetime: 20,
