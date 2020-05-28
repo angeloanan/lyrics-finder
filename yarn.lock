@@ -533,10 +533,10 @@
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
 
-"@types/ffi-napi@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@types/ffi-napi/-/ffi-napi-2.4.1.tgz#e28ec33998e41605b1792944e38798dee8612221"
-  integrity sha512-QbCEQZRMGOuin88fK7rOIVCJE9NnhgYV4fASV2yOSctt6UC+mZyx5HSXrBQX0VkFHctn+uTuuSbXzZZF0WLnPg==
+"@types/ffi-napi@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@types/ffi-napi/-/ffi-napi-2.4.2.tgz#20083dde112d8bf6fadf087f0831041f21e62c24"
+  integrity sha512-nfCnN74SWJyURb0J6Fx4QjDcOmwGXgAb5TLAg8pWNf3fl+I6NJk4sveB6eWb2lPk24/r755Vh8xgoft7uY6kEA==
   dependencies:
     "@types/node" "*"
     "@types/ref-napi" "*"
