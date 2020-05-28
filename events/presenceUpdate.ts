@@ -49,6 +49,6 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
       completeSearch(songQuery, responseMessage)
     })
     .catch(err => {
-      if (err === 'Error: Spotify Song Not Found') { } else { console.error('Presence Update Error', err) }
+      if ((err as Error).message === 'Spotify Song Not Found') { } else { console.error('Presence Update Error', err) }
     })
 }
