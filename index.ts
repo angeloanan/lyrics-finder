@@ -21,7 +21,7 @@ bot.on('message', async (message) => {
       require('./commands/info').exec(bot, message)
       break
     case 'invite':
-      message.channel.send('**Invite Link**: https://lyrics-finder.angeloanan.xyz/invite')
+      message.channel.send('**Invite Link**: https://lyrics-finder.angeloanan.xyz')
       break
     case 'help':
       require('./commands/help').exec(bot, message)
