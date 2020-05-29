@@ -22,9 +22,8 @@ async function main (bot: Client, message: Message): Promise<void> {
   }, {
     name: 'Links and URLs',
     value: `
-    **Bot's Website**: https://lyrics-finder.angeloanan.xyz
-    **Invite Link**: https://lyrics-finder.angeloanan.xyz/invite
-    **top.gg Page**: https://top.gg/bot/559265456008200222
+    **Bot's Website **: https://lyrics-finder.angeloanan.xyz
+    **Support the bot**: https://lyrics-finder.angeloanan.xyz/support
     `.trim(),
     inline: false
   }, {
