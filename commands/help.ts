@@ -21,6 +21,20 @@ export async function exec (_: Client, message: Message): Promise<void> {
       **Aliases**: \`np\`
       `.trim(),
       inline: true
+    }, {
+      name: '\u200B',
+      value: '\u200B',
+      inline: true
+    }, {
+      name: '`autosearch` - Auto Spotify Search',
+      value: `
+      Searches your Spotify song lyrics on-the-go
+      Every song change, the bot searches automatically
+
+      **Usage**: \`~!autosearch\`
+      **Aliases**: \`auto\`
+      `.trim(),
+      inline: true
     }
   ]
 
