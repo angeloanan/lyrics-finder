@@ -60,6 +60,12 @@ bot.on('presenceUpdate', (_, presence) => {
   require('./events/presenceUpdate').onPresenceUpdate(bot, presence)
 })
 
+bot.on('error', (err) => {
+  console.log('Bot Error', err)
+  bot.destroy()
+  process.exit(1)
+})
+
 process.on('SIGINT', () => {
   console.log('SIGINT Detected')
   bot.destroy()
