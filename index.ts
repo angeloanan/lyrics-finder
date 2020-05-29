@@ -5,8 +5,11 @@ const bot = new Discord.Client()
 
 bot.on('message', async (message) => {
   if (message.author.bot) return // Bot user
+  if (message.cleanContent.startsWith('@Lyrics Finder')) return message.channel.send('Mentions are not supported anymore!\nThe bot\'s prefix is now `~!`. Try `~!help`!')
   if (!message.content.startsWith('~!')) return // Command prefix
   if (message.content.length <= 2) return // Prefix only
+
+  // If message starts with a mention. Delete this after some time
 
   const msg = message.content.substring(2).trim()
   const cmd = msg.split(' ')[0]
