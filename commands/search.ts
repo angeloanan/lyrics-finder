@@ -1,6 +1,6 @@
 import { Client, Message, MessageEmbed, EmbedField } from 'discord.js'
 import { searchAPI as geniusSearch } from '../api/genius/searchAPI'
-import { scrapeLyricsFromURL as scrape } from '../api/genius/scrapeLyricsRewrite'
+import { scrapeLyricsFromURL as scrape } from '../api/genius/scrapeLyrics'
 import { lyricsEmbedBarebones, loadingEmoji } from '../utils/embedPreload'
 import { Result } from '../types/GeniusAPI'
 import { getSpotifySong } from '../utils/getSpotifySong'
