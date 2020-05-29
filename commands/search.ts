@@ -67,18 +67,17 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
 
 export async function search (bot: Client, message: Message): Promise<void> {
   // Sends the embed
-  const responseMessage = message.channel.send(lyricsEmbedBarebones)
-
   const msg = message.content.substring(1) // FIXME: Don't hardcode prefix length
   const searchTerm = msg.split(' ').splice(1).join(' ')
 
-  if (searchTerm === '') { message.channel.send('Query Empty'); return }
-  if (searchTerm.includes('.com')) { message.channel.send('Includes URL'); return }
+  if (searchTerm === '') { message.channel.send('You did not enter any search term!'); return }
+  if (searchTerm.includes('.com')) { message.channel.send('Searches may not include URL'); return }
 
-  if (message.mentions.everyone) { message.channel.send('Include mentions'); return }
-  if (message.mentions.users.size > 0) { message.channel.send('Include mentions'); return }
-  if (message.mentions.channels.size > 0) { message.channel.send('Include mentions'); return }
+  if (message.mentions.everyone) { message.channel.send('Searches may not include mentions'); return }
+  if (message.mentions.users.size > 0) { message.channel.send('Searches may not include mentions'); return }
+  if (message.mentions.channels.size > 0) { message.channel.send('Searches may not include mentions'); return }
 
+  const responseMessage = message.channel.send(lyricsEmbedBarebones)
   completeSearch(searchTerm, responseMessage)
 }
 
@@ -90,6 +89,6 @@ export async function nowPlaying (bot: Client, message: Message): Promise<void> 
     })
     .catch(async () => {
       // FIXME: Typescript Reject type error
-      (await responseMessage).edit('Error: Spotify Song not Found')
+      (await responseMessage).edit('You are not listening to any Spotify song or you didn\'t display them to your profile!', { embed: null })
     })
 }
