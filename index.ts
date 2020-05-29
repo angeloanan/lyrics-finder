@@ -53,12 +53,7 @@ bot.on('guildDelete', async (guild) => {
 })
 
 bot.on('ready', async () => {
-  if (bot.user == null) return
-  console.log('---')
-  console.log(`Logged in as ${bot.user.username}#${bot.user.discriminator}`)
-  console.log(`Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds`)
-  console.log(`Admin invite link: ${await bot.generateInvite(['SEND_MESSAGES', 'EMBED_LINKS', 'USE_EXTERNAL_EMOJIS'])}`)
-  console.log('---')
+  require('./events/ready').handle(bot)
 })
 
 bot.on('presenceUpdate', (_, presence) => {
