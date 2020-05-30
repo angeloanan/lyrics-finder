@@ -1,8 +1,10 @@
 import type { Client, Guild } from 'discord.js'
+import { update } from '../api/blapi'
 
 // List your event handlers here.
-async function main (bot: Client, guild: Guild): Promise<void> {
-  // TODO: Implement BLAPI
+async function main (bot: Client, _guild: Guild): Promise<void> {
+  if (!bot.user) return
+  update(bot.guilds.cache.size, bot.user.id)
 }
 
 exports.handle = main
