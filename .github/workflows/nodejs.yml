@@ -16,11 +16,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm run lint
-        npm run build
-        npm test --if-present
+    - name: Install packages
+      run: npm install
+    - name: Build Typescript
+      run: npm run build
+    - name: Run tests
+      run: npm test --if-present
       env:
         CI: true
