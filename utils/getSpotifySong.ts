@@ -11,7 +11,7 @@ export function getSpotifySong (presence: Presence): Promise<string> {
 
     for (const presence of presences) {
       if (presence.name === 'Spotify' && presence.applicationID === null) {
-        return resolve(`${presence.state} - ${presence.details}`)
+        return resolve(`${presence.state} ${presence.details}`)
       }
     }
 
