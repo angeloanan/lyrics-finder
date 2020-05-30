@@ -17,10 +17,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install packages
-      run: npm install
+      run: yarn install
     - name: Build Typescript
-      run: npm run build
+      run: yarn build
     - name: Run tests
-      run: npm test --if-present
+      run: yarn test
       env:
         CI: true

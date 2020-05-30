@@ -43,6 +43,7 @@
   },
   "scripts": {
     "test": "jest --coverage",
+    "build": "tsc",
     "start": "ts-node .",
     "profiler": "tsc && node ./target/index.js --harmony --prof"
   }
