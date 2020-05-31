@@ -35,8 +35,6 @@ export async function logSearches (data: SearchEntry): Promise<void> {
   record.stringField('songArtist', data.fields.songArtist)
   record.stringField('totalTime', data.fields.totalTime)
 
-  record.timestamp(data.time)
-
   writeApi.writeRecord(record.toString())
   writeApi.close()
 }
