@@ -1,17 +1,17 @@
 # Build stage
-FROM node:14 AS build
+FROM node:14-alpine AS build
 WORKDIR /usr/app
 COPY package*.json ./
-RUN yarn install
+RUN npm install
 COPY . .
-RUN yarn build
+RUN npm build
 
 # App stage
 FROM node:14-alpine as app
 WORKDIR /usr/app
 COPY package*.json ./
 ENV NODE_ENV=production
-RUN yarn install --production
+RUN npm install --production
 
 COPY --from=build /usr/app/target ./
 VOLUME /usr/app/img
