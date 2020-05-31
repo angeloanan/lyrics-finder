@@ -1,5 +1,5 @@
 # Build stage
-FROM node:14-slim AS build
+FROM node:14 AS build
 WORKDIR /usr/app
 COPY package*.json ./
 RUN yarn install
