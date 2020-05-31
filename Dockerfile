@@ -1,5 +1,5 @@
 # Build stage
-FROM node:14-slim AS build
+FROM node:14 AS build
 WORKDIR /usr/app
 COPY package*.json ./
 RUN yarn install
@@ -7,7 +7,7 @@ COPY . .
 RUN yarn build
 
 # App stage
-FROM node:14-alpine as app
+FROM node:14 as app
 WORKDIR /usr/app
 COPY package*.json ./
 ENV NODE_ENV=production
