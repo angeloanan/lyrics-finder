@@ -1,5 +1,5 @@
 import type { Client, Guild } from 'discord.js'
-import { update } from '../api/blapi'
+import { update } from '../api/botList'
 
 // List your event handlers here.
 async function main (bot: Client, _guild: Guild): Promise<void> {
