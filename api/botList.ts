@@ -18,6 +18,8 @@ async function postTopGG (guildCount: number, botID: string): Promise<void> {
     },
     body: JSON.stringify(topggBody)
   })
+
+  console.log(`Guild count has been updated to ${guildCount}`)
 }
 
 export async function update (guildCount: number, botID: string): Promise<void> {
