@@ -4,7 +4,7 @@ import { update } from '../api/botList'
 // List your event handlers here.
 async function main (bot: Client, _guild: Guild): Promise<void> {
   if (!bot.user) return
-  update(bot.guilds.cache.size, bot.user.id)
+  update(bot.guilds.cache.size, bot)
 }
 
 exports.handle = main
