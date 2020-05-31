@@ -5,6 +5,7 @@ import { lyricsEmbedBarebones, loadingEmoji } from '../utils/embedPreload'
 import { Result } from '../types/GeniusAPI'
 import { getSpotifySong } from '../utils/getSpotifySong'
 import { makeLyricsEmbedField } from '../utils/formLyricsFields'
+import { logSearches } from '../utils/logging'
 
 require('dotenv').config()
 
@@ -32,7 +33,7 @@ async function fillBarebonesEmbed (message: Message, song: Result): Promise<void
   message.edit(preloadedSongEmbed)
 }
 
-export async function completeSearch (searchTerm: string, message: Promise<Message>): Promise<void> {
+export async function completeSearch (searchTerm: string, message: Promise<Message>, invokeMethod: 'search' | 'nowplaying' | 'autosearch'): Promise<void> {
   const searchResult = geniusSearch(searchTerm)
   const response = await message
 
@@ -59,6 +60,21 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
       finalSongEmbed.spliceFields(0, 1, finalEmbedFields)
 
       response.edit(finalSongEmbed)
+
+      // Logging
+      logSearches({
+        tags: {
+          status: 'success',
+          method: invokeMethod
+        },
+        fields: {
+          query: searchTerm,
+          songTitle: song.title,
+          songArtist: song.primaryArtist.name,
+          totalTime: (Date.now() - response.createdTimestamp)
+        },
+        time: response.createdAt
+      })
     })
   }).catch(err => {
     response.channel.send('Error\n' + err.toString())
@@ -78,14 +94,14 @@ export async function search (bot: Client, message: Message): Promise<void> {
   if (message.mentions.channels.size > 0) { message.channel.send('Searches may not include mentions'); return }
 
   const responseMessage = message.channel.send(lyricsEmbedBarebones)
-  completeSearch(searchTerm, responseMessage)
+  completeSearch(searchTerm, responseMessage, 'search')
 }
 
 export async function nowPlaying (bot: Client, message: Message): Promise<void> {
   const responseMessage = message.channel.send(lyricsEmbedBarebones)
   getSpotifySong(message.author.presence)
     .then(searchTerm => {
-      completeSearch(searchTerm, responseMessage)
+      completeSearch(searchTerm, responseMessage, 'nowplaying')
     })
     .catch(async () => {
       // FIXME: Typescript Reject type error

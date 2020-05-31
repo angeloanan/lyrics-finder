@@ -46,7 +46,7 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
       // Set currentSong table
       db.set(`currentSong.${userID}`, songQuery)
 
-      completeSearch(songQuery, responseMessage)
+      completeSearch(songQuery, responseMessage, 'autosearch')
     })
     .catch(err => {
       if ((err as Error).message === 'Spotify Song Not Found') { } else { console.error('Presence Update Error', err) }
