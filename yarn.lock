@@ -609,10 +609,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^14.0.6":
-  version "14.0.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.6.tgz#f9e178b2da31a4b0ec60b64649e244c31ce18daf"
-  integrity sha512-FbNmu4F67d3oZMWBV6Y4MaPER+0EpE9eIYf2yaHhCWovc1dlXCZkqGX4NLHfVVr6umt20TNBdRzrNJIzIKfdbw==
+"@types/node@*", "@types/node@^14.0.9":
+  version "14.0.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.9.tgz#43896ab87fc82bda1dfd600cdf44a0c8a64e11d2"
+  integrity sha512-0sCTiXKXELOBxvZLN4krQ0FPOAA7ij+6WwvD0k/PHd9/KAkr4dXel5J9fh6F4x1FwAQILqAWkmpeuS6mjf1iKA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -1044,13 +1044,6 @@ bl@^4.0.1:
     buffer "^5.5.0"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
-
-blapi@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/blapi/-/blapi-1.3.3.tgz#cb9e32da6146f959ba2e65901c64fa0ad5b05567"
-  integrity sha512-lUBE4QSBk+tJKWuCLpWQQ/rngyJ9fvGAQUnBrv6ZEQtYqxB2Zrdd5MEQQk4v2Mw48AOL4dvm0eFdvdLbwppSrQ==
-  dependencies:
-    node-fetch "^2.6.0"
 
 boolbase@~1.0.0:
   version "1.0.0"
@@ -1665,9 +1658,10 @@ entities@^2.0.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.0.tgz#68d6084cab1b079767540d80e56a39b423e4abf4"
   integrity sha512-D9f7V0JSRwIxlRI2mjMqufDrRDnx8p+eEOz7aUM9SuvF8gsBzra0/6tbjl1m8eQHrZlYj6PxqE00hZ1SAIKPLw==
 
-erlpack@discordapp/erlpack:
+erlpack@^0.1.3:
   version "0.1.3"
-  resolved "https://codeload.github.com/discordapp/erlpack/tar.gz/c514d36ec81a7a61ef90b75df261025ab046574d"
+  resolved "https://registry.yarnpkg.com/erlpack/-/erlpack-0.1.3.tgz#f6cd2a0d5b2f9d054b310c1dda98f60744b9f857"
+  integrity sha512-QeG9v8CVsY/a/IoQi8zjn23aYKcziOihAxwjUl3tI/KB4R1FjTtctDAAMovgtpC16S+WiOauers2oWwIOQtKBQ==
   dependencies:
     bindings "^1.5.0"
     nan "^2.14.0"
