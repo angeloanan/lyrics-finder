@@ -52,7 +52,7 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
 
     scraper.then(async lyrics => {
       // Doesn't complete the search if lyrics is too long.
-      if (lyrics.length >= 5800) { response.embeds[0].spliceFields(0, 1, embedTooLongMessage); return }
+      if (lyrics.length >= 5800) { response.edit(response.embeds[0].spliceFields(0, 1, embedTooLongMessage)); return }
 
       const finalEmbedFields = await makeLyricsEmbedField(lyrics)
       const finalSongEmbed = response.embeds[0]
