@@ -5,7 +5,7 @@ const presenceData: PresenceData = {
   afk: false,
   activity: {
     type: 'WATCHING',
-    name: 'for ~!help | v3.0'
+    name: 'for ~!help | v3.0.2'
   }
 }
 
