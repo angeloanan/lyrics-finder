@@ -40,7 +40,7 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
   // Waits until the message is sent and search result came back
   searchResult.then(async (searchResult) => { // Gets the song
     if (searchResult.response.hits.length === 0) { // If search results came out empty
-      response.edit('I didn\'t find any song matching the query! Maybe, consider adding it to https://genius.com!')
+      response.channel.send('I didn\'t find any song matching the query! Maybe, consider adding it to https://genius.com !')
       return
     }
 
