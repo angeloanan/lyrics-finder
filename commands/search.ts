@@ -94,11 +94,21 @@ export async function search (bot: Client, message: Message): Promise<void> {
   if (message.mentions.channels.size > 0) { message.channel.send('Searches may not include mentions'); return }
 
   const responseMessage = message.channel.send(lyricsEmbedBarebones)
+
+  // Catch permission error
+  responseMessage.catch((err) => {
+    message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\`${err}\``)
+  })
+
   completeSearch(searchTerm, responseMessage, 'search')
 }
 
 export async function nowPlaying (bot: Client, message: Message): Promise<void> {
   const responseMessage = message.channel.send(lyricsEmbedBarebones)
+  responseMessage.catch((err) => {
+    message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\`${err}\``)
+  })
+
   getSpotifySong(message.author.presence)
     .then(searchTerm => {
       completeSearch(searchTerm, responseMessage, 'nowplaying')
