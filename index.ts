@@ -21,6 +21,7 @@ bot.on('message', async (message) => {
       break
     case 'info':
     case 'status':
+    case 'stats':
       require('./commands/info').exec(bot, message)
       break
     case 'invite':
