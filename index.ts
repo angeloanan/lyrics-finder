@@ -1,7 +1,8 @@
 import Discord from 'discord.js'
+import { clientOpts } from './config'
 require('dotenv').config()
 
-const bot = new Discord.Client()
+const bot = new Discord.Client(clientOpts)
 
 bot.on('message', async (message) => {
   if (message.author.bot) return // Bot user
