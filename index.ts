@@ -16,6 +16,9 @@ bot.on('message', async (message) => {
 
   // Add commands here
   switch (cmd) {
+    case 'about':
+      require('./commands/about').exec(bot, message)
+      break
     case 'info':
     case 'status':
       require('./commands/info').exec(bot, message)
