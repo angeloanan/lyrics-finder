@@ -1,6 +1,6 @@
 {
   "name": "lyrics-finder",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Lyrics Finder bot on Discord",
   "main": "index.js",
   "repository": "https://github.com/angeloanan/lyrics-finder",
