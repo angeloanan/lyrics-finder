@@ -5,6 +5,7 @@ require('dotenv').config()
 const topggToken = process.env.TOPGG_TOKEN
 const extremeListToken = process.env.EXTREMELIST_TOKEN
 const discordBotListToken = process.env.DBL_TOKEN
+const discordBotsGGToken = process.env.DISCORDBOTSGG_TOKEN
 
 async function postTopGG (guildCount: number, botID: string): Promise<void> {
   if (!topggToken) return
@@ -61,6 +62,23 @@ async function postDiscordBotList (guildCount: number, botID: string, userCount:
   })
 }
 
+async function postDiscordBotsGG (guildCount: number, botID: string): Promise<void> {
+  if (!discordBotsGGToken) return
+
+  const discordBotsGGBody = {
+    guildCount: guildCount
+  }
+
+  fetch(`https://discord.bots.gg/api/v1/bots${botID}/stats`, {
+    method: 'POST',
+    headers: {
+      Authorization: discordBotsGGToken,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(discordBotsGGBody)
+  })
+}
+
 export async function update (guildCount: number, bot: Client): Promise<void> {
   if (bot.user?.id !== '559265456008200222') return
 
@@ -69,6 +87,7 @@ export async function update (guildCount: number, bot: Client): Promise<void> {
   postTopGG(guildCount, botID)
   postExtremeList(guildCount, botID)
   postDiscordBotList(guildCount, botID, userCount)
+  postDiscordBotsGG(guildCount, botID)
 
   console.log(`Guild count has been updated to ${guildCount}`)
 }
