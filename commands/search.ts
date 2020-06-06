@@ -6,6 +6,7 @@ import { Result } from '../types/GeniusAPI'
 import { getSpotifySong } from '../utils/getSpotifySong'
 import { makeLyricsEmbedField } from '../utils/formLyricsFields'
 import { logSearches } from '../utils/logging'
+import { customEmotesRegex, twemojiRegex } from '../config'
 
 require('dotenv').config()
 
@@ -88,6 +89,8 @@ export async function search (bot: Client, message: Message): Promise<void> {
 
   if (searchTerm === '') { message.channel.send('You did not enter any search term!'); return }
   if (searchTerm.includes('.com')) { message.channel.send('Searches may not include URL'); return }
+  if (twemojiRegex.test(searchTerm)) { message.channel.send('Searches may not include emotes!'); return }
+  if (customEmotesRegex.test(searchTerm)) { message.channel.send('Searches may not include emotes!'); return }
 
   if (message.mentions.everyone) { message.channel.send('Searches may not include mentions'); return }
   if (message.mentions.users.size > 0) { message.channel.send('Searches may not include mentions'); return }
