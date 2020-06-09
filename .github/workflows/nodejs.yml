@@ -13,8 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Use NodeJS ${{ matrix.node-version }}
-      env:
-        LASTFM_KEY: ${{ secrets.LASTFM_KEY }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -22,7 +20,24 @@ jobs:
       run: yarn install
     - name: Build Typescript
       run: yarn build
-    - name: Run tests
-      run: yarn test
-      env:
-        CI: true
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install packages
+        run: yarn install
+      - name: Run tests
+        run: yarn test
+        env:
+          LASTFM_KEY: ${{ secrets.LASTFM_KEY }}
+          CI: true
