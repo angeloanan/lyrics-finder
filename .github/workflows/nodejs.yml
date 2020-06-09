@@ -13,6 +13,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Use NodeJS ${{ matrix.node-version }}
+      env:
+        LASTFM_KEY: ${{ secrets.LASTFM_KEY }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
