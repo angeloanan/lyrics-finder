@@ -68,7 +68,7 @@ These instructions will get you a copy of the bot up and running on your local m
 
 ### Prerequisites
 
-You will need to install [NodeJS](https://nodejs.org) and the `node-gyp` build tool ([info](https://github.com/nodejs/node-gyp#installation)). [Yarn](https://yarnpkg.com) is recommended to install the project's dependency.
+You will need to install [NodeJS](https://nodejs.org) version 14 or higher and the `node-gyp` build tool ([info](https://github.com/nodejs/node-gyp#installation)). [Yarn](https://yarnpkg.com) is recommended to install the project's dependency.
 
 ### Installing
 
@@ -96,7 +96,29 @@ $ mv .env.example .env
 $ nano .env
 ```
 
-After everything has been set, you can run the bot
+#### Compiling and running
+
+To compile (transpile) the code back to Javascript, you will need to do the following
+
+```
+$ tsc .
+```
+
+The compiled code will be available on the `targets` folder. Now, you can run the index file to run the bot.
+
+#### Running with ts-node
+
+You can skip compiling / transpiling the code by using a package called `ts-node`
+
+```
+// Using NPM
+$ npm i -g ts-node
+// Using Yarn
+$ yarn global add ts-node
+```
+
+After it's installed, you can start the bot by doing the following
+
 ```
 // Using NPM
 $ npm start
