@@ -37,7 +37,7 @@
     "quick.db": "^7.1.1",
     "typescript": "^3.9.5",
     "utf-8-validate": "^5.0.2",
-    "zlib-sync": "^0.1.6"
+    "zlib-sync": "^0.1.7"
   },
   "scripts": {
     "test": "jest --coverage",
