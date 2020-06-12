@@ -1,11 +1,12 @@
 import { Client, PresenceData } from 'discord.js'
+import { version } from '../package.json'
 
 const presenceData: PresenceData = {
   status: 'online',
   afk: false,
   activity: {
     type: 'WATCHING',
-    name: 'for ~!help | v3.0.4'
+    name: `for ~!help | v${version}`
   }
 }
 
