@@ -69,7 +69,7 @@ async function postDiscordBotsGG (guildCount: number, botID: string): Promise<vo
     guildCount: guildCount
   }
 
-  fetch(`https://discord.bots.gg/api/v1/bots${botID}/stats`, {
+  fetch(`https://discord.bots.gg/api/v1/bots/${botID}/stats`, {
     method: 'POST',
     headers: {
       Authorization: discordBotsGGToken,
