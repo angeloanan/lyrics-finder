@@ -13,8 +13,8 @@ const splitOptions: SplitOptions = {
  */
 export function createEmbedField (name: string, value: string): EmbedField {
   return {
-    name: name,
-    value: value,
+    name: name ?? '\u200B',
+    value: value ?? '\u200B',
     inline: false
   }
 }
