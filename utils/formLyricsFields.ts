@@ -52,21 +52,6 @@ export function makeSectionsArray (lyrics: string): string[][] | [] {
   return sections
 }
 
-/**
- * Validates and cleans up embed
- * @param fields Embeds to validate
- */
-export function validateEmbedField (fields: EmbedField[]): EmbedField[] {
-  const validatedFields: EmbedField[] = []
-  for (const field of fields) {
-    if (typeof field.name === 'undefined') field.name = '{MISSING DATA}'
-    if (typeof field.value === 'undefined') field.name = '{MISSING DATA}'
-    validatedFields.push(field)
-  }
-
-  return validatedFields
-}
-
 export async function makeLyricsEmbedField (lyrics: string): Promise<EmbedField[]> {
   // Output variable
   const fields: EmbedField[] = []
