@@ -7,6 +7,13 @@ test('Safe Trim - Undefined', () => {
   expect(text).toBe('\u200B')
 })
 
+test('Safe Trim - null', () => {
+  const a = null
+  const text = safeTrim(a, '\u200B')
+
+  expect(text).toBe('\u200B')
+})
+
 test('Safe Trim - NewLine', () => {
   const text = safeTrim('\n', '\u200B')
 
