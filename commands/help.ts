@@ -45,4 +45,7 @@ export async function exec (_: Client, message: Message): Promise<void> {
     .setFooter('Not finding your lyrics? Consider adding it to Genius!')
 
   message.channel.send(embed)
+    .catch(err => {
+      message.channel.send(`I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${err}\``)
+    })
 }
