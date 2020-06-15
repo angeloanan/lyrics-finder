@@ -1,4 +1,4 @@
-import { safeTrim } from '../utils/formLyricsFields'
+import { safeTrim } from '../utils/safeTrim'
 
 test('Safe Trim - Undefined', () => {
   const a = undefined

@@ -1,6 +1,7 @@
 import { EmbedField, Util, SplitOptions } from 'discord.js'
 import execall from 'execall'
 import { regex as lyricsRegex } from '../config'
+import { safeTrim } from './safeTrim'
 
 const splitMessage = Util.splitMessage
 const splitOptions: SplitOptions = {
@@ -20,27 +21,11 @@ export function createEmbedField (name: string, value: string): EmbedField {
 }
 
 /**
- * Trims text safely, taking care of `undefined`
- * @param text Text to trim safely
- * @param replacer Replaced text when undefined
- */
-export function safeTrim (text: string | null | undefined, replacer: string): string {
-  // Check if undefined or null
-  if (typeof text === 'undefined') return replacer
-  if (text === null) return replacer
-
-  // Trim and check if empty (Newlines get trimmed)
-  const trimmedText = text.trim()
-  if (trimmedText === '') return replacer
-  return trimmedText
-}
-
-/**
  * Forms an array of Lyrics Sections, consisting of their header and lyrics
  * @param lyrics Song Lyrics
  * @returns Lyrics Sections | Empty array if undefined
  */
-export function makeSectionsArray (lyrics: string): string[][] | [] {
+export function makeSectionsArray (lyrics: string): string[][] {
   // Output Result
   const sections: string[][] = []
   const sectionsRegex = execall(lyricsRegex, lyrics)
