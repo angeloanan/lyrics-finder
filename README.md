@@ -42,7 +42,7 @@ If you display your current Spotify song as your Discord status, it can automati
 ![Simple Search](https://img.angeloanan.xyz/XbWljK4B)
 ![Search using lyrics](https://img.angeloanan.xyz/PRLY7NeJ)
 ![Multilingual Support Demo](https://img.angeloanan.xyz/5baOdwRd)
-![Autosearch Mode Demo](https://img.angeloanan.xyz/3e3OyneV)
+![Autosearch Mode Demo](https://img.angeloanan.xyz/5e65mVRz)
 
 ## 💭 How it works <a name = "working"></a>
 
