@@ -22,4 +22,7 @@ export async function exec (bot: Client, message: Message): Promise<void> {
   aboutMessage.setFooter('Lyrics Finder is developed using discord.js')
 
   message.channel.send(aboutMessage)
+    .catch(err => {
+      message.channel.send(`I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${err}\``)
+    })
 }
