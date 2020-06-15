@@ -79,7 +79,11 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
       })
     })
   }).catch(err => {
-    response.channel.send('Error\n' + err.toString())
+    response.channel.send(
+      new MessageEmbed()
+        .setColor('FF6464')
+        .addField('<:botwarning:722031167532171346> | Uncaught Error!', `I'm not able to send this message because of an unknown error. This incident has been reported!\n\`\`\`apache\n${err}\`\`\`\n\nJoin the [Support Server](https://discord.gg/qDX9rua) to learn more about this error!`)
+    )
   })
 }
 
@@ -101,7 +105,7 @@ export async function search (bot: Client, message: Message): Promise<void> {
 
   // Catch permission error
   responseMessage.catch((err) => {
-    message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\`${err}\``)
+    message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\n\`${err}\``)
   })
 
   completeSearch(searchTerm, responseMessage, 'search')
@@ -109,6 +113,7 @@ export async function search (bot: Client, message: Message): Promise<void> {
 
 export async function nowPlaying (bot: Client, message: Message): Promise<void> {
   const responseMessage = message.channel.send(lyricsEmbedBarebones)
+
   responseMessage.catch((err) => {
     message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\`${err}\``)
   })
