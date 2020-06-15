@@ -45,6 +45,9 @@ async function main (bot: Client, message: Message): Promise<void> {
     .addFields(infoFields)
 
   message.channel.send(messageEmbed)
+    .catch(err => {
+      message.channel.send(`I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${err}\``)
+    })
 }
 
 exports.exec = main
