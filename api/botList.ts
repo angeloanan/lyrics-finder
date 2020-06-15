@@ -6,6 +6,7 @@ const topggToken = process.env.TOPGG_TOKEN
 const extremeListToken = process.env.EXTREMELIST_TOKEN
 const discordBotListToken = process.env.DBL_TOKEN
 const discordBotsGGToken = process.env.DISCORDBOTSGG_TOKEN
+const glennBotListToken = process.env.GLENNBOTLIST_TOKEN
 
 async function postTopGG (guildCount: number, botID: string): Promise<void> {
   if (!topggToken) return
@@ -79,15 +80,34 @@ async function postDiscordBotsGG (guildCount: number, botID: string): Promise<vo
   })
 }
 
+async function postGlennBotList (guildCount: number, botID: string): Promise<void> {
+  if (!glennBotListToken) return
+
+  const glennBotListBody = {
+    serverCount: guildCount
+  }
+
+  fetch(`https://glennbotlist.xyz/api/bot/${botID}/stats`, {
+    method: 'POST',
+    headers: {
+      Authorization: glennBotListToken,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(glennBotListBody)
+  })
+}
+
 export async function update (guildCount: number, bot: Client): Promise<void> {
   if (bot.user?.id !== '559265456008200222') return
 
   const botID = bot.user.id
   const userCount = bot.users.cache.size
+
   postTopGG(guildCount, botID)
   postExtremeList(guildCount, botID)
   postDiscordBotList(guildCount, botID, userCount)
   postDiscordBotsGG(guildCount, botID)
+  postGlennBotList(guildCount, botID)
 
   console.log(`Guild count has been updated to ${guildCount}`)
 }
