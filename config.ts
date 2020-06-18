@@ -14,6 +14,7 @@ export const clientOpts: ClientOptions = {
   disableMentions: 'everyone'
 }
 
+export const SpotifyAPIBaseURL = 'https://api.spotify.com/v1/'
 export const geniusAPIBaseURL = 'https://api.genius.com'
 
 export const tips = [
