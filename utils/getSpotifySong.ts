@@ -18,9 +18,11 @@ export function getSpotifySong (presence: Presence): Promise<string> {
         const songPrimaryArtist = songArtist.split(';')[0] || songArtist // Only takes the first artist
 
         const songTitle = presence.details || ''
-        const songTitleClean = songTitle.split('(')[0] // Cleans anything brackets
+        const songTitleCleanBrackets = songTitle.split('(')[0] // Cleans anything brackets
+        const songTitleCleanDash = songTitleCleanBrackets.split('-')[0] // Cleans anything brackets
 
-        return resolve(`${songTitleClean} ${songPrimaryArtist}`)
+        const cleanSongTitle = songTitleCleanDash
+        return resolve(`${cleanSongTitle} ${songPrimaryArtist}`)
       }
     }
     reject(new Error('Spotify Song Not Found'))
