@@ -279,10 +279,10 @@
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-"@influxdata/influxdb-client@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@influxdata/influxdb-client/-/influxdb-client-1.3.0.tgz#d776c24ab3ea8c6d631d7f4d449434f0d89f39fd"
-  integrity sha512-JEjgsKBqVx7K0Xot3d+3Gg12mhdt8dgPVDkykKgyX9gHG422nmTkb12q8RwADewhYzL6Gt55UlBA4q4dMhhl9Q==
+"@influxdata/influxdb-client@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@influxdata/influxdb-client/-/influxdb-client-1.4.0.tgz#230d52052968407cc7c5592b52c714e7809fdd3d"
+  integrity sha512-zCw3VGbF1Hcgl4g1UyzACZVQ0+CLkziWT6pCJXuWSjfa41jfmpxmo1oursfOlbZPhDKmGXl4MPIX+9ExoncbQA==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
