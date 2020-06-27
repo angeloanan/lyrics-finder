@@ -8,6 +8,7 @@ const discordBotListToken = process.env.DBL_TOKEN
 const discordBotsGGToken = process.env.DISCORDBOTSGG_TOKEN
 const glennBotListToken = process.env.GLENNBOTLIST_TOKEN
 const discordBoatsToken = process.env.DISCORDBOATS_TOKEN
+const discordBotlistSpaceToken = process.env.BOTLISTSPACE_TOKEN
 
 async function postTopGG (guildCount: number, botID: string): Promise<void> {
   if (!topggToken) return
@@ -116,6 +117,24 @@ async function postDiscordBoats (guildCount: number, botID: string): Promise<voi
   })
 }
 
+async function postBotlistSpace (guildCount: number, botID: string): Promise<void> {
+  if (!discordBotlistSpaceToken) return
+
+  const discordBotlistSpaceBody = {
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    server_count: guildCount
+  }
+
+  fetch(`https://api.botlist.space/v1/bots/${botID}`, {
+    method: 'POST',
+    headers: {
+      Authorization: discordBotlistSpaceToken,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(discordBotlistSpaceBody)
+  })
+}
+
 export async function update (guildCount: number, bot: Client): Promise<void> {
   if (bot.user?.id !== '559265456008200222') return
 
@@ -128,6 +147,7 @@ export async function update (guildCount: number, bot: Client): Promise<void> {
   postDiscordBotsGG(guildCount, botID)
   postGlennBotList(guildCount, botID)
   postDiscordBoats(guildCount, botID)
+  postBotlistSpace(guildCount, botID)
 
   console.log(`Guild count has been updated to ${guildCount}`)
 }
