@@ -35,7 +35,7 @@ async function postExtremeList (guildCount: number, botID: string): Promise<void
     guildCount: guildCount
   }
 
-  fetch(`https://api.discordextremelist.xyz/v1/bot/${botID}`, {
+  fetch(`https://api.discordextremelist.xyz/v2/bot/${botID}/stats`, {
     method: 'POST',
     headers: {
       Authorization: extremeListToken,
