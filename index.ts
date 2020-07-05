@@ -1,5 +1,6 @@
 import Discord from 'discord.js'
 import { clientOpts } from './config'
+import privacyPolicy from './utils/privacyPolicyEmbed'
 require('dotenv').config()
 
 const bot = new Discord.Client(clientOpts)
@@ -46,6 +47,11 @@ bot.on('message', async (message) => {
       break
     case 'support':
       message.channel.send('**Support the bot (and the creator) here**: https://lyrics-finder.angeloanan.xyz/support')
+      break
+    case 'privacy':
+    case 'privacypolicy':
+    case 'policy':
+      message.channel.send(privacyPolicy)
       break
   }
 })
