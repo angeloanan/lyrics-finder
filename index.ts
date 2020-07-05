@@ -14,7 +14,7 @@ bot.on('message', async (message) => {
   // If message starts with a mention. Delete this after some time
 
   const msg = message.content.substring(2).trim()
-  const cmd = msg.split(' ')[0]
+  const cmd = msg.split(' ')[0].toLowerCase()
 
   // Add commands here
   switch (cmd) {
