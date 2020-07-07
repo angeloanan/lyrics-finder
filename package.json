@@ -7,7 +7,7 @@
   "author": "Christopher Angelo <angelo@angeloanan.xyz>",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "@types/cheerio": "^0.22.18",
+    "@types/cheerio": "^0.22.20",
     "@types/ffi-napi": "^2.4.3",
     "@types/jest": "^26.0.3",
     "@types/node": "^14.0.14",
