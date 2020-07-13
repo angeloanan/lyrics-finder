@@ -32,19 +32,32 @@ bot.on('message', async (message) => {
     case 'help':
       require('./commands/help').exec(bot, message)
       break
+
+      // case 's':
+      // case 'search':
+      // case 'lyrics':
+      //   require('./commands/search').search(bot, message)
+      //   break
+      // case 'np':
+      // case 'nowplaying':
+      //   require('./commands/search').nowPlaying(bot, message)
+      //   break
+      // case 'autosearch':
+      // case 'auto':
+      //   require('./commands/autosearch').exec(bot, message)
+      //   break
+
+    // Only if Maintenance
     case 's':
     case 'search':
     case 'lyrics':
-      require('./commands/search').search(bot, message)
-      break
     case 'np':
     case 'nowplaying':
-      require('./commands/search').nowPlaying(bot, message)
-      break
     case 'autosearch':
     case 'auto':
-      require('./commands/autosearch').exec(bot, message)
+      require('./utils/maintenance').exec(bot, message)
       break
+
     case 'support':
       message.channel.send('**Support the bot (and the creator) here**: https://lyrics-finder.angeloanan.xyz/support')
       break
