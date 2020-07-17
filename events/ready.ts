@@ -5,8 +5,8 @@ const presenceData: PresenceData = {
   status: 'dnd',
   afk: false,
   activity: {
-    type: 'PLAYING',
-    name: 'Maintenance mode'
+    type: 'WATCHING',
+    name: `for ~!help | ${version}`
   }
 }
 
