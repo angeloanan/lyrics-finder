@@ -2,7 +2,7 @@ import { Client, PresenceData } from 'discord.js'
 import { version } from '../package.json'
 
 const presenceData: PresenceData = {
-  status: 'dnd',
+  status: 'idle',
   afk: false,
   activity: {
     type: 'WATCHING',
