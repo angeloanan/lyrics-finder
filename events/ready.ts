@@ -1,5 +1,6 @@
-import { Client, PresenceData } from 'discord.js'
+import { PresenceData } from 'discord.js'
 import { version } from '../package.json'
+import { DiscordClient } from '../types/DiscordClient'
 
 const presenceData: PresenceData = {
   status: 'online',
@@ -10,13 +11,10 @@ const presenceData: PresenceData = {
   }
 }
 
-export async function handle (bot: Client): Promise<void> {
+export async function handle (bot: DiscordClient): Promise<void> {
   if (bot.user === null) return
-  console.log('---')
-  console.log(`Logged in as ${bot.user.username}#${bot.user.discriminator} at ${new Date()}`)
-  console.log(`Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds`)
-  console.log(`Admin invite link: ${await bot.generateInvite(['SEND_MESSAGES', 'EMBED_LINKS', 'USE_EXTERNAL_EMOJIS'])}`)
-  console.log('---')
+  bot.logger.info('DiscordJS Ready')
+  bot.logger.info({ guildCount: bot.guilds.cache.size - 1, user: bot.users.cache.size }, 'Guild Count Update')
 
   // Set presence
   bot.user.setPresence(presenceData)

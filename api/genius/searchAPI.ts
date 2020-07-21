@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
 import { geniusAPIBaseURL as APIBaseURL } from '../../config'
 import { Convert as convert, SearchResult } from '../../types/GeniusAPI'
+import logger from '../../utils/logger'
 require('dotenv').config()
 
 /**
@@ -24,7 +25,10 @@ export function searchAPI (query: string): Promise<SearchResult> {
         if (searchResult.meta.status !== 200) reject(new Error('Genius Meta Status ' + searchResult.meta.status))
         resolve(searchResult)
       })
-      .catch(err => reject(err))
+      .catch(err => {
+        logger.warn(err, 'Genius SearchAPI Error')
+        reject(err)
+      })
   })
 }
 
