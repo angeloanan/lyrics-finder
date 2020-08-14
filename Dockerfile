@@ -22,4 +22,4 @@ RUN apk add --no-cache --virtual .build-deps alpine-sdk python \
 COPY --from=build /usr/app/target ./
 VOLUME /usr/app/img
 
-CMD node index.js | pino-datadog --key $DATADOG_KEY
+CMD node index.js
