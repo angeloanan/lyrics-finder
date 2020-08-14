@@ -14,7 +14,7 @@ const presenceData: PresenceData = {
 export async function handle (bot: DiscordClient): Promise<void> {
   if (bot.user === null) return
   bot.logger.info('DiscordJS Ready')
-  bot.logger.info({ guildCount: bot.guilds.cache.size - 1, user: bot.users.cache.size }, 'Guild Count Update')
+  bot.logger.info({ guildCount: bot.guilds.cache.size, user: bot.users.cache.size }, 'Guild Count Update')
 
   // Set presence
   bot.user.setPresence(presenceData)
