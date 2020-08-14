@@ -1,48 +1,57 @@
 import { Client, Message, EmbedField, MessageEmbed } from 'discord.js'
 
-export async function exec (_: Client, message: Message): Promise<void> {
-  const helpFields: EmbedField[] = [
-    {
-      name: '`search` - Basic Lyrics Search',
-      value: `
-        Searches your query for songs
-        Also works if you write part of the lyrics
+export function wrapInCodeblocks (str: string[]): string {
+  let out = '```\n'
+  for (const s of str) {
+    out += s + '\n'
+  }
+  out += '```'
 
-        **Usage**: \`~!search <song name>\`
-        **Aliases**: \`s\`, \`lyrics\`
-      `.trim(),
-      inline: true
-    }, {
-      name: '`nowplaying` - Spotify Search',
-      value: `
-      Searches your currently playing Spotify song lyrics
+  return out
+}
 
-      **Usage**: \`~!nowplaying\`
-      **Aliases**: \`np\`
-      `.trim(),
-      inline: true
-    }, {
-      name: '\u200B',
-      value: '\u200B',
-      inline: true
-    }, {
-      name: '`autosearch` - Auto Spotify Search',
-      value: `
-      Searches your Spotify song lyrics on-the-go
-      Every song change, the bot searches automatically
+const helpFields: EmbedField[] = [
+  {
+    name: '🎶 • Lyrics (**3**)',
+    value: wrapInCodeblocks([
+      'search',
+      'nowplaying',
+      'autosearch'
+    ]),
+    inline: true
+  },
+  {
+    name: '💬 • Bot Info (**4**)',
+    value: wrapInCodeblocks([
+      'help',
+      'ping',
+      'invite',
+      'stats'
+    ]),
+    inline: true
+  },
+  {
+    name: '📂 • Miscellaneous (**1**)',
+    value: wrapInCodeblocks([
+      'privacypolicy'
+    ]),
+    inline: true
+  }
+]
 
-      **Usage**: \`~!autosearch\`
-      **Aliases**: \`auto\`
-      `.trim(),
-      inline: true
-    }
-  ]
-
+export async function exec (bot: Client, message: Message): Promise<void> {
+  const query = message.content.split(' ')[1] ?? ''
   const embed = new MessageEmbed()
-    .setTitle('Lyrics Finder Help')
-    .addFields(helpFields)
     .setColor('2F3136')
-    .setFooter('Not finding your lyrics? Consider adding it to Genius!')
+
+  switch (query) {
+    default:
+      embed.setAuthor('Lyrics Finder Help | Commands', bot.user?.displayAvatarURL())
+      embed.setDescription('Here is the bot\'s available commands.\nJust add the prefix `~!` before one of the commands')
+      embed.setFooter('Something doesn\'t work or need help? Join the support server!')
+      embed.addFields(helpFields)
+      break
+  }
 
   message.channel.send(embed)
     .catch(err => {
