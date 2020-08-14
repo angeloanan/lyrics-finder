@@ -56,6 +56,7 @@ export interface Result {
 
 export enum LyricsState {
   Complete = 'complete',
+  Unreleased = 'unreleased',
 }
 
 export interface PrimaryArtist {
@@ -137,13 +138,16 @@ export class Convert {
   }
 }
 
-function invalidValue (typ: any, val: any): never {
+function invalidValue (typ: any, val: any, key: any = ''): never {
+  if (key) {
+    throw Error(`Invalid value for key "${key}". Expected type ${JSON.stringify(typ)} but got ${JSON.stringify(val)}`)
+  }
   throw Error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`)
 }
 
 function jsonToJSProps (typ: any): any {
   if (typ.jsonToJS === undefined) {
-    var map: any = {}
+    const map: any = {}
     typ.props.forEach((p: any) => map[p.json] = { key: p.js, typ: p.typ })
     typ.jsonToJS = map
   }
@@ -152,24 +156,24 @@ function jsonToJSProps (typ: any): any {
 
 function jsToJSONProps (typ: any): any {
   if (typ.jsToJSON === undefined) {
-    var map: any = {}
+    const map: any = {}
     typ.props.forEach((p: any) => map[p.js] = { key: p.json, typ: p.typ })
     typ.jsToJSON = map
   }
   return typ.jsToJSON
 }
 
-function transform (val: any, typ: any, getProps: any): any {
+function transform (val: any, typ: any, getProps: any, key: any = ''): any {
   function transformPrimitive (typ: string, val: any): any {
     if (typeof typ === typeof val) return val
-    return invalidValue(typ, val)
+    return invalidValue(typ, val, key)
   }
 
   function transformUnion (typs: any[], val: any): any {
     // val must validate against one typ in typs
-    var l = typs.length
-    for (var i = 0; i < l; i++) {
-      var typ = typs[i]
+    const l = typs.length
+    for (let i = 0; i < l; i++) {
+      const typ = typs[i]
       try {
         return transform(val, typ, getProps)
       } catch (_) {}
@@ -188,7 +192,7 @@ function transform (val: any, typ: any, getProps: any): any {
     return val.map(el => transform(el, typ, getProps))
   }
 
-  function transformDate (typ: any, val: any): any {
+  function transformDate (val: any): any {
     if (val === null) {
       return null
     }
@@ -203,15 +207,15 @@ function transform (val: any, typ: any, getProps: any): any {
     if (val === null || typeof val !== 'object' || Array.isArray(val)) {
       return invalidValue('object', val)
     }
-    var result: any = {}
+    const result: any = {}
     Object.getOwnPropertyNames(props).forEach(key => {
       const prop = props[key]
       const v = Object.prototype.hasOwnProperty.call(val, key) ? val[key] : undefined
-      result[prop.key] = transform(v, prop.typ, getProps)
+      result[prop.key] = transform(v, prop.typ, getProps, prop.key)
     })
     Object.getOwnPropertyNames(val).forEach(key => {
       if (!Object.prototype.hasOwnProperty.call(props, key)) {
-        result[key] = transform(val[key], additional, getProps)
+        result[key] = transform(val[key], additional, getProps, key)
       }
     })
     return result
@@ -234,7 +238,7 @@ function transform (val: any, typ: any, getProps: any): any {
           : invalidValue(typ, val)
   }
   // Numbers can be parsed by Date but shouldn't be.
-  if (typ === Date && typeof val !== 'number') return transformDate(typ, val)
+  if (typ === Date && typeof val !== 'number') return transformDate(val)
   return transformPrimitive(typ, val)
 }
 
@@ -323,6 +327,7 @@ const typeMap: any = {
     'song'
   ],
   LyricsState: [
-    'complete'
+    'complete',
+    'unreleased'
   ]
 }
