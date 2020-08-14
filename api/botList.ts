@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { Client } from 'discord.js'
+import { DiscordClient } from '../types/DiscordClient'
 require('dotenv').config()
 
 const topggToken = process.env.TOPGG_TOKEN
@@ -135,11 +135,12 @@ async function postBotlistSpace (guildCount: number, botID: string): Promise<voi
   })
 }
 
-export async function update (guildCount: number, bot: Client): Promise<void> {
-  if (bot.user?.id !== '559265456008200222') return
-
-  const botID = bot.user.id
+export async function update (guildCount: number, bot: DiscordClient): Promise<void> {
+  const botID = bot.user?.id
   const userCount = bot.users.cache.size
+
+  bot.logger.info({ guildCount, userCount }, 'Guild count update')
+  if (botID == null || bot.user?.id !== '559265456008200222') return
 
   postTopGG(guildCount, botID)
   postExtremeList(guildCount, botID)
@@ -148,6 +149,4 @@ export async function update (guildCount: number, bot: Client): Promise<void> {
   postGlennBotList(guildCount, botID)
   postDiscordBoats(guildCount, botID)
   postBotlistSpace(guildCount, botID)
-
-  console.log(`Guild count has been updated to ${guildCount}`)
 }

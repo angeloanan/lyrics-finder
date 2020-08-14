@@ -1,9 +1,12 @@
 import Discord from 'discord.js'
+import logger from './utils/logger'
 import { clientOpts } from './config'
+import { DiscordClient } from './types/DiscordClient'
 import privacyPolicy from './utils/privacyPolicyEmbed'
 require('dotenv').config()
 
-const bot = new Discord.Client(clientOpts)
+const bot = new Discord.Client(clientOpts) as DiscordClient
+bot.logger = logger
 
 bot.on('message', async (message) => {
   if (message.author.bot) return // Bot user
@@ -76,19 +79,19 @@ bot.on('presenceUpdate', (_, presence) => {
 })
 
 bot.on('error', (err) => {
-  console.log('Bot Error', err)
+  bot.logger.fatal(err, 'DiscordJS Error')
   bot.destroy()
   process.exit(1)
 })
 
 process.on('SIGINT', () => {
-  console.log('SIGINT Detected')
+  bot.logger.warn('Process SIGINT')
   bot.destroy()
   process.exit(0)
 })
 
 process.on('SIGTERM', () => {
-  console.log('SIGTERM Detected')
+  bot.logger.warn('Process SIGTERM')
   bot.destroy()
   process.exit(0)
 })

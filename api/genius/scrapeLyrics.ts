@@ -3,6 +3,7 @@
 // Things that can go wrong: Lyrics is empty
 
 import fetch from 'node-fetch'
+import logger from '../../utils/logger'
 require('dotenv').config()
 
 // Genius scraping is very unreliable
@@ -23,6 +24,10 @@ export async function scrapeUntilSuccess (url: string): Promise<string> {
     .then(res => {
       // if (res.length <= 5) scrapeUntilSuccess(url)
       return res
+    })
+    .catch(err => {
+      logger.fatal(err, 'Genius Scrape Error')
+      return 'Unknown Error has occured!'
     })
 }
 

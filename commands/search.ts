@@ -5,8 +5,9 @@ import { lyricsEmbedBarebones, loadingEmoji } from '../utils/embedPreload'
 import { Result } from '../types/GeniusAPI'
 import { getSpotifySong } from '../utils/getSpotifySong'
 import { makeLyricsEmbedField } from '../utils/formLyricsFields'
-import { logSearches } from '../utils/logging'
+import logger, { logSearches } from '../utils/logger'
 import { customEmotesRegex, twemojiRegex } from '../config'
+import { DiscordClient } from '../types/DiscordClient'
 
 require('dotenv').config()
 
@@ -43,6 +44,7 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
     if (searchResult.response.hits.length === 0) { // If search results came out empty
       response.delete()
       response.channel.send('I didn\'t find any song matching the query! Maybe, consider adding it to <https://genius.com>!')
+      logger.info({ query: searchTerm }, `${invokeMethod} not found`)
       return
     }
 
@@ -74,11 +76,20 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
           songTitle: song.title,
           songArtist: song.primaryArtist.name,
           totalTime: (Date.now() - response.createdTimestamp)
-        },
-        time: response.createdAt
+        }
       })
     })
   }).catch(err => {
+    logSearches({
+      tags: {
+        status: 'failed',
+        method: invokeMethod
+      },
+      fields: {
+        query: searchTerm
+      },
+      message: err
+    })
     response.channel.send(
       new MessageEmbed()
         .setColor('FF6464')
@@ -87,7 +98,7 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
   })
 }
 
-export async function search (bot: Client, message: Message): Promise<void> {
+export async function search (bot: DiscordClient, message: Message): Promise<void> {
   // Sends the embed
   const msg = message.content.substring(1) // FIXME: Don't hardcode prefix length
   const searchTerm = msg.split(' ').splice(1).join(' ')
