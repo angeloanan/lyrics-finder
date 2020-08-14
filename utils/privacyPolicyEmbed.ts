@@ -4,7 +4,7 @@ const embed = new MessageEmbed()
 
 embed.setTitle('Lyrics Finder Privacy Policy')
 embed.setDescription(`
-Discord obliges every bots to have a [Privacy Policy](https://github.com/discord/discord-api-docs/blob/2c8f55422e5a53196eabf7db51957c3426fafe01/docs/Legal.md#a-implement-good-privacy-practices) as of August 15, 2020. Here is the [Lyrics Finder's Privacy Policy](https://lyrics-finder.angeloanan.xyz/policy).
+Discord obliges every bots to have a [Privacy Policy](https://github.com/discord/discord-api-docs/blob/2c8f55422e5a53196eabf7db51957c3426fafe01/docs/Legal.md#a-implement-good-privacy-practices) as of August 15, 2020. Here is the [Lyrics Finder's Privacy Policy](https://lyrics-finder.angeloanan.xyz/privacy-policy).
 `.trim())
 
 embed.addField('TL;DR', `
