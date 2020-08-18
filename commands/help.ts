@@ -21,18 +21,19 @@ const helpFields: EmbedField[] = [
     inline: true
   },
   {
-    name: '💬 • Bot Info (**4**)',
+    name: '⛏ • Admin Commands (**1**)',
     value: wrapInCodeblocks([
-      'help',
-      'ping',
-      'invite',
-      'stats'
+      'stopautosearch'
     ]),
     inline: true
   },
   {
-    name: '📂 • Miscellaneous (**1**)',
+    name: '💬 • Bot Info (**5**)',
     value: wrapInCodeblocks([
+      'help',
+      'ping',
+      'invite',
+      'stats',
       'privacypolicy'
     ]),
     inline: true

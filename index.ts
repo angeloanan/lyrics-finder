@@ -59,6 +59,9 @@ bot.on('message', async (message) => {
     case 'policy':
       message.channel.send(privacyPolicy)
       break
+    case 'stopautosearch':
+    case 'stopauto':
+      require('./commands/stopautosearch').exec(bot, message)
   }
 })
 
