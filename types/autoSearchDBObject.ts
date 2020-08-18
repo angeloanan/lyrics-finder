@@ -1,4 +1,4 @@
-export interface AutoSearchUser {
+export type AutoSearchDBObject = {
   guildID: string;
   channelID: string;
 }

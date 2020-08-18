@@ -1,5 +1,5 @@
 import type { Presence, Client, TextChannel } from 'discord.js'
-import type { AutoSearchUser } from '../types/autoSearchList'
+import type { AutoSearchDBObject } from '../types/autoSearchDBObject'
 import db from 'quick.db'
 import { getSpotifySong } from '../utils/getSpotifySong'
 import { lyricsEmbedBarebones } from '../utils/embedPreload'
@@ -21,7 +21,7 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
   const userID = presence.user.id
 
   // Get database entry to know which channel to respond
-  const dbEntry: AutoSearchUser = db.get(`autoSearchList.${userID}`)
+  const dbEntry: AutoSearchDBObject = db.get(`autoSearchList.${userID}`)
   const guildID = dbEntry.guildID
   const channelID = dbEntry.channelID
 
