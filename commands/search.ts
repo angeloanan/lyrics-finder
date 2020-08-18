@@ -98,7 +98,7 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
   })
 }
 
-export async function search (bot: DiscordClient, message: Message): Promise<void> {
+export async function search (_bot: DiscordClient, message: Message): Promise<void> {
   // Sends the embed
   const msg = message.content.substring(1) // FIXME: Don't hardcode prefix length
   const searchTerm = msg.split(' ').splice(1).join(' ')
@@ -122,7 +122,7 @@ export async function search (bot: DiscordClient, message: Message): Promise<voi
   completeSearch(searchTerm, responseMessage, 'search')
 }
 
-export async function nowPlaying (bot: Client, message: Message): Promise<void> {
+export async function nowPlaying (_bot: Client, message: Message): Promise<void> {
   const responseMessage = message.channel.send(lyricsEmbedBarebones)
 
   responseMessage.catch((err) => {

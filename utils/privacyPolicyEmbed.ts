@@ -12,6 +12,6 @@ I do not collect any user info (i.e. Username, Discriminator or UserID). I only 
 `.trim())
 
 embed.setFooter('You can contact me if you have any questions | Last updated at ')
-embed.setTimestamp(Date.parse('15 August 2020 00:00:00 UTC'))
+embed.setTimestamp(Date.parse('Aug 19 2020 03:45 GMT+7'))
 
 export default embed
