@@ -33,7 +33,7 @@ bot.on('message', async (message) => {
       message.channel.send('**Invite Link**: https://lyrics-finder.angeloanan.xyz')
       break
     case 'ping':
-      message.channel.send(`Pong! *${bot.ws.ping}ms*`)
+      message.channel.send(`Pong! *${Math.round(bot.ws.ping)}ms*`)
       break
     case 'help':
       require('./commands/help').exec(bot, message)

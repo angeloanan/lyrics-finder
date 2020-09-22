@@ -1,4 +1,5 @@
-import { Client, Message, MessageEmbed, EmbedFieldData } from 'discord.js'
+import { Client, EmbedFieldData, Message, MessageEmbed } from 'discord.js'
+
 import prettyms from 'pretty-ms'
 
 async function main (bot: Client, message: Message): Promise<void> {
@@ -16,7 +17,7 @@ async function main (bot: Client, message: Message): Promise<void> {
     Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds
     Has been online for ${prettyms(bot.uptime || 0, { verbose: true, unitCount: 2, secondsDecimalDigits: 0 })}
     Using ${Math.round(process.memoryUsage().rss / 1000 / 1000)}MB of memory
-    Average ping is around ${bot.ws.ping}ms
+    Average ping is around ${Math.round(bot.ws.ping)}ms
     `.trim(),
     inline: true
   }, {
