@@ -1,8 +1,9 @@
-import { Client, Message, DMChannel } from 'discord.js'
-import db from 'quick.db'
-import { AutoSearchDBObject } from '../types/autoSearchDBObject'
+import { Client, DMChannel, Message } from 'discord.js'
 
-export async function exec (bot: Client, message: Message): Promise<void> {
+import { AutoSearchDBObject } from '../types/autoSearchDBObject'
+import db from 'quick.db'
+
+export async function exec (_bot: Client, message: Message): Promise<void> {
   if (message.channel instanceof DMChannel) { message.channel.send('I don\'t support Direct Messages yet!'); return }
 
   const userID = message.author.id.toString()

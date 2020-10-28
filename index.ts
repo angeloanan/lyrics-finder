@@ -1,8 +1,9 @@
 import Discord from 'discord.js'
-import logger from './utils/logger'
-import { clientOpts } from './config'
 import { DiscordClient } from './types/DiscordClient'
+import { clientOpts } from './config'
+import logger from './utils/logger'
 import privacyPolicy from './utils/privacyPolicyEmbed'
+
 require('dotenv').config()
 
 const bot = new Discord.Client(clientOpts) as DiscordClient
