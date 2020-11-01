@@ -2,6 +2,9 @@
   "env": {
     "jest": true
   },
+  "plugins": [
+    "simple-import-sort"
+  ],
   "extends": "standard-with-typescript",
   "parserOptions": {
     "project": "./tsconfig.json"
