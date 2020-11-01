@@ -1,6 +1,7 @@
+import 'dotenv/config'
 import fetch from 'node-fetch'
 import { DiscordClient } from '../types/DiscordClient'
-require('dotenv').config()
+import logger from '../utils/logger'
 
 const topggToken = process.env.TOPGG_TOKEN
 const extremeListToken = process.env.EXTREMELIST_TOKEN
@@ -11,14 +12,13 @@ const discordBoatsToken = process.env.DISCORDBOATS_TOKEN
 const discordBotlistSpaceToken = process.env.BOTLISTSPACE_TOKEN
 
 async function postTopGG (guildCount: number, botID: string): Promise<void> {
-  if (!topggToken) return
+  if (topggToken == null) return
 
   const topggBody = {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     server_count: guildCount
   }
 
-  fetch(`https://top.gg/api/bots/${botID}/stats`, {
+  await fetch(`https://top.gg/api/bots/${botID}/stats`, {
     method: 'POST',
     headers: {
       Authorization: topggToken,
@@ -29,13 +29,13 @@ async function postTopGG (guildCount: number, botID: string): Promise<void> {
 }
 
 async function postExtremeList (guildCount: number, botID: string): Promise<void> {
-  if (!extremeListToken) return
+  if (extremeListToken == null) return
 
   const topggBody = {
     guildCount: guildCount
   }
 
-  fetch(`https://api.discordextremelist.xyz/v2/bot/${botID}/stats`, {
+  await fetch(`https://api.discordextremelist.xyz/v2/bot/${botID}/stats`, {
     method: 'POST',
     headers: {
       Authorization: extremeListToken,
@@ -46,16 +46,15 @@ async function postExtremeList (guildCount: number, botID: string): Promise<void
 }
 
 async function postDiscordBotList (guildCount: number, botID: string, userCount: number): Promise<void> {
-  if (!discordBotListToken) return
+  if (discordBotListToken == null) return
 
   const discordBotListBody = {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     voice_connections: 0,
     users: userCount,
     guilds: guildCount
   }
 
-  fetch(`https://discordbotlist.com/api/v1/bots/${botID}/stats`, {
+  await fetch(`https://discordbotlist.com/api/v1/bots/${botID}/stats`, {
     method: 'POST',
     headers: {
       Authorization: discordBotListToken,
@@ -66,13 +65,13 @@ async function postDiscordBotList (guildCount: number, botID: string, userCount:
 }
 
 async function postDiscordBotsGG (guildCount: number, botID: string): Promise<void> {
-  if (!discordBotsGGToken) return
+  if (discordBotsGGToken == null) return
 
   const discordBotsGGBody = {
     guildCount: guildCount
   }
 
-  fetch(`https://discord.bots.gg/api/v1/bots/${botID}/stats`, {
+  await fetch(`https://discord.bots.gg/api/v1/bots/${botID}/stats`, {
     method: 'POST',
     headers: {
       Authorization: discordBotsGGToken,
@@ -83,13 +82,13 @@ async function postDiscordBotsGG (guildCount: number, botID: string): Promise<vo
 }
 
 async function postGlennBotList (guildCount: number, botID: string): Promise<void> {
-  if (!glennBotListToken) return
+  if (glennBotListToken == null) return
 
   const glennBotListBody = {
     serverCount: guildCount
   }
 
-  fetch(`https://glennbotlist.xyz/api/bot/${botID}/stats`, {
+  await fetch(`https://glennbotlist.xyz/api/bot/${botID}/stats`, {
     method: 'POST',
     headers: {
       Authorization: glennBotListToken,
@@ -100,14 +99,13 @@ async function postGlennBotList (guildCount: number, botID: string): Promise<voi
 }
 
 async function postDiscordBoats (guildCount: number, botID: string): Promise<void> {
-  if (!discordBoatsToken) return
+  if (discordBoatsToken == null) return
 
   const discordBoatsBody = {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     server_count: guildCount
   }
 
-  fetch(`https://discord.boats/api/bot/${botID}`, {
+  await fetch(`https://discord.boats/api/bot/${botID}`, {
     method: 'POST',
     headers: {
       Authorization: discordBoatsToken,
@@ -118,14 +116,13 @@ async function postDiscordBoats (guildCount: number, botID: string): Promise<voi
 }
 
 async function postBotlistSpace (guildCount: number, botID: string): Promise<void> {
-  if (!discordBotlistSpaceToken) return
+  if (discordBotlistSpaceToken == null) return
 
   const discordBotlistSpaceBody = {
-    // eslint-disable-next-line @typescript-eslint/camelcase
     server_count: guildCount
   }
 
-  fetch(`https://api.botlist.space/v1/bots/${botID}`, {
+  await fetch(`https://api.botlist.space/v1/bots/${botID}`, {
     method: 'POST',
     headers: {
       Authorization: discordBotlistSpaceToken,
@@ -139,14 +136,27 @@ export async function update (guildCount: number, bot: DiscordClient): Promise<v
   const botID = bot.user?.id
   const userCount = bot.users.cache.size
 
-  bot.logger.info({ guildCount, userCount }, 'Guild count update')
+  // Disallow duplicate of bots to submit details to
   if (botID == null || bot.user?.id !== '559265456008200222') return
 
-  postTopGG(guildCount, botID)
-  postExtremeList(guildCount, botID)
-  postDiscordBotList(guildCount, botID, userCount)
-  postDiscordBotsGG(guildCount, botID)
-  postGlennBotList(guildCount, botID)
-  postDiscordBoats(guildCount, botID)
-  postBotlistSpace(guildCount, botID)
+  const fetching = await Promise.allSettled([
+    postTopGG(guildCount, botID),
+    postExtremeList(guildCount, botID),
+    postDiscordBotList(guildCount, botID, userCount),
+    postDiscordBotsGG(guildCount, botID),
+    postGlennBotList(guildCount, botID),
+    postDiscordBoats(guildCount, botID),
+    postBotlistSpace(guildCount, botID)
+  ])
+
+  let allSucess = true
+
+  fetching.forEach((promiseRes) => {
+    if (promiseRes.status === 'rejected') {
+      logger.error(promiseRes.reason)
+      allSucess = false
+    }
+  })
+
+  bot.logger.info({ guildCount, userCount, success: allSucess }, 'Guild count update')
 }
