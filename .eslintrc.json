@@ -1,25 +1,9 @@
 {
-    "env": {
-        "es6": true,
-        "jest": true,
-        "node": true
-    },
-    "extends": [
-        "standard",
-        "plugin:@typescript-eslint/recommended"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
-    }
+  "env": {
+    "jest": true
+  },
+  "extends": "standard-with-typescript",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
 }
