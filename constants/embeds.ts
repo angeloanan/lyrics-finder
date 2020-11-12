@@ -2,6 +2,7 @@ import { Client, MessageEmbed } from 'discord.js'
 import { getTips, wrapInCodeblocks } from '../utils'
 
 import { LoadingEmoji } from './emojis'
+import prettyms from 'pretty-ms'
 
 const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
   return new MessageEmbed({
@@ -80,4 +81,52 @@ const BarebonesLyricsEmbed = (): MessageEmbed => {
   })
 }
 
-export { AboutLyricsFinderEmbed, BarebonesLyricsEmbed, PrivacyPolicyEmbed, HelpEmbed }
+const InfoEmbed = (bot: Client): MessageEmbed => {
+  const avatar = bot.user?.displayAvatarURL()
+  const uptime = prettyms(bot.uptime ?? 0, { verbose: true, unitCount: 2, secondsDecimalDigits: 0 })
+
+  return new MessageEmbed({
+    title: 'Lyrics Finder Information',
+    hexColor: '36393E',
+    thumbnail: { url: avatar },
+
+    fields: [{
+      name: 'Bot Information',
+      value: `
+      **Node Version**: ${process.version}
+      **Framework**: DiscordJS 12
+      **Developer**: <@189769721653100546>
+      `.trim(),
+      inline: true
+    }, {
+      name: 'Live Statistics',
+      value: `
+      Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds
+      Has been online for ${uptime}
+      Using ${Math.round(process.memoryUsage().rss / 1000 / 1000)}MB of memory
+      Average ping is around ${Math.round(bot.ws.ping)}ms
+      `.trim(),
+      inline: true
+    }, {
+      name: 'Links and URLs',
+      value: `
+      **Bot's Website **: https://lyrics-finder.angeloanan.xyz
+      **Support the bot**: https://lyrics-finder.angeloanan.xyz/support
+      `.trim(),
+      inline: false
+    }, {
+      name: 'Disclaimers',
+      value: `
+      **Data Collection**
+      I don't store anything except for search terms.
+      These terms are anonymous; I can't tell what's whos.
+      These are stored for ~30 days for bugfixing.
+      `.trim(),
+      inline: false
+    }],
+
+    footer: { text: 'Found any bugs? Report it at https://discord.gg/qDX9rua' }
+  })
+}
+
+export { AboutLyricsFinderEmbed, BarebonesLyricsEmbed, PrivacyPolicyEmbed, HelpEmbed, InfoEmbed }
