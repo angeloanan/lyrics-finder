@@ -43,7 +43,8 @@
   "scripts": {
     "test": "jest --coverage",
     "build": "tsc",
-    "start": "ts-node .",
+    "start": "node ./target/index.js",
+    "dev": "yarn build && node ./target/index.js",
     "profiler": "tsc && node ./target/index.js --harmony --prof"
   },
   "husky": {
