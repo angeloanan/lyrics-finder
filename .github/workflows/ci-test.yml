@@ -1,7 +1,8 @@
 name: CI - Test
 on: [push]
 jobs:
-  test:
+  testing:
+    name: Tests the code
   	runs-on: ubuntu-latest
 
     strategy:
