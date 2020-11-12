@@ -1,6 +1,8 @@
 import { Client, MessageEmbed } from 'discord.js'
 import { getTips, wrapInCodeblocks } from '../utils'
 
+import { LoadingEmoji } from './emojis'
+
 const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
   return new MessageEmbed({
     author: { name: 'About Lyrics Finder', iconURL: bot.user?.displayAvatarURL() },
@@ -77,7 +79,7 @@ const HelpEmbed = (bot: Client): MessageEmbed => {
 
 const BarebonesLyricsEmbed = (): MessageEmbed => {
   return new MessageEmbed({
-    title: '<a:loading:697741386199597156> Loading...',
+    title: `${LoadingEmoji} Loading...`,
     hexColor: 'FFFF64',
     footer: { text: `by Lyrics Finder | ${getTips()}` }
   })
