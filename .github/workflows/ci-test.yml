@@ -3,7 +3,7 @@ on: [push]
 jobs:
   testing:
     name: Tests the code
-  	runs-on: ubuntu-latest
+  	runs-on: ubuntu-20.04
 
     strategy:
       matrix:
