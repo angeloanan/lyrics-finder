@@ -1,15 +1,17 @@
-import { Client, Message, MessageEmbed, EmbedField } from 'discord.js'
-import { searchAPI as geniusSearch } from '../api/genius/searchAPI'
-import { scrapeLyricsFromURL as scrape } from '../api/genius/scrapeLyrics'
-import { lyricsEmbedBarebones, loadingEmoji } from '../utils/embedPreload'
+import 'dotenv/config'
+
+import { Client, EmbedField, Message, MessageEmbed } from 'discord.js'
+import { customEmotesRegex, twemojiRegex } from '../config'
+import logger, { logSearches } from '../utils/logger'
+
+import { BarebonesLyricsEmbed } from '../constants/embeds'
+import { DiscordClient } from '../types/DiscordClient'
+import { LoadingEmoji } from '../constants/emojis'
 import { Result } from '../types/GeniusAPI'
+import { searchAPI as geniusSearch } from '../api/genius/searchAPI'
 import { getSpotifySong } from '../utils/getSpotifySong'
 import { makeLyricsEmbedField } from '../utils/formLyricsFields'
-import logger, { logSearches } from '../utils/logger'
-import { customEmotesRegex, twemojiRegex } from '../config'
-import { DiscordClient } from '../types/DiscordClient'
-
-require('dotenv').config()
+import { scrapeLyricsFromURL as scrape } from '../api/genius/scrapeLyrics'
 
 const embedTooLongMessage: EmbedField[] = [{
   name: 'Lyrics is too long!',
@@ -24,15 +26,15 @@ const embedTooLongMessage: EmbedField[] = [{
  */
 async function fillBarebonesEmbed (message: Message, song: Result): Promise<void> {
   // Create a copy of Embed Barebones and fill in the blanks
-  const preloadedSongEmbed = new MessageEmbed(lyricsEmbedBarebones)
+  const preloadedSongEmbed = new MessageEmbed(BarebonesLyricsEmbed())
   preloadedSongEmbed
     .setTitle(song.title)
     .setDescription(`*by ${song.primaryArtist.name ?? 'MISSING DATA'}*`)
     .setURL(song.url ?? 'MISSING DATA')
     .setThumbnail(song.songArtImageUrl ?? 'MISSING DATA')
-    .addField(loadingEmoji + ' Lyrics Loading...', '\u200B')
+    .addField(LoadingEmoji + ' Lyrics Loading...', '\u200B')
 
-  message.edit(preloadedSongEmbed)
+  await message.edit(preloadedSongEmbed)
 }
 
 export async function completeSearch (searchTerm: string, message: Promise<Message>, invokeMethod: 'search' | 'nowplaying' | 'autosearch'): Promise<void> {
@@ -112,7 +114,7 @@ export async function search (_bot: DiscordClient, message: Message): Promise<vo
   if (message.mentions.users.size > 0) { message.channel.send('Searches may not include mentions'); return }
   if (message.mentions.channels.size > 0) { message.channel.send('Searches may not include mentions'); return }
 
-  const responseMessage = message.channel.send(lyricsEmbedBarebones)
+  const responseMessage = message.channel.send(BarebonesLyricsEmbed())
 
   // Catch permission error
   responseMessage.catch((err) => {
@@ -123,7 +125,7 @@ export async function search (_bot: DiscordClient, message: Message): Promise<vo
 }
 
 export async function nowPlaying (_bot: Client, message: Message): Promise<void> {
-  const responseMessage = message.channel.send(lyricsEmbedBarebones)
+  const responseMessage = message.channel.send(BarebonesLyricsEmbed())
 
   responseMessage.catch((err) => {
     message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\`${err}\``)

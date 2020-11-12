@@ -1,9 +1,10 @@
-import type { Presence, Client, TextChannel } from 'discord.js'
+import type { Client, Presence, TextChannel } from 'discord.js'
+
 import type { AutoSearchDBObject } from '../types/autoSearchDBObject'
+import { BarebonesLyricsEmbed } from '../constants/embeds'
+import { completeSearch } from '../commands/search'
 import db from 'quick.db'
 import { getSpotifySong } from '../utils/getSpotifySong'
-import { lyricsEmbedBarebones } from '../utils/embedPreload'
-import { completeSearch } from '../commands/search'
 
 // Spotify auto lyrics search
 
@@ -37,11 +38,11 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
 
   // Start sending messages etc
   getSpotifySong(presence)
-    .then(songQuery => {
+    .then(async songQuery => {
       // If presence were updated while still listening to the same song
       if (db.get(`currentSong.${userID}`) === songQuery) return
 
-      const responseMessage = channel.send(`<@${userID}>, here are your lyrics`, { embed: lyricsEmbedBarebones })
+      const responseMessage = channel.send(`<@${userID}>, here are your lyrics`, { embed: BarebonesLyricsEmbed() })
 
       // Set currentSong table
       db.set(`currentSong.${userID}`, songQuery)
