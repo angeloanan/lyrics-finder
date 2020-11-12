@@ -1,6 +1,5 @@
 import { Client, MessageEmbed } from 'discord.js'
-
-import { getTips } from '../utils'
+import { getTips, wrapInCodeblocks } from '../utils'
 
 const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
   return new MessageEmbed({
@@ -38,6 +37,44 @@ const PrivacyPolicyEmbed = (): MessageEmbed => {
   })
 }
 
+const HelpEmbed = (bot: Client): MessageEmbed => {
+  return new MessageEmbed({
+    author: { name: 'Lyrics Finder Help | Commands', icon_url: bot.user?.displayAvatarURL() },
+    description: 'Here is the bot\'s available commands.\nJust add the prefix `~!` before one of the commands',
+    hexColor: '2F3136',
+
+    fields: [{
+      name: '🎶 • Lyrics (**3**)',
+      value: wrapInCodeblocks([
+        'search',
+        'nowplaying',
+        'autosearch'
+      ]),
+      inline: true
+    },
+    {
+      name: '💬 • Bot Info (**5**)',
+      value: wrapInCodeblocks([
+        'help',
+        'ping',
+        'invite',
+        'stats',
+        'privacypolicy'
+      ]),
+      inline: true
+    },
+    {
+      name: '⛏ • Admin Commands (**1**)',
+      value: wrapInCodeblocks([
+        'stopautosearch'
+      ]),
+      inline: true
+    }],
+
+    footer: { text: 'Need help or something doesn\'t work? Join the support server!' }
+  })
+}
+
 const BarebonesLyricsEmbed = (): MessageEmbed => {
   return new MessageEmbed({
     title: '<a:loading:697741386199597156> Loading...',
@@ -46,4 +83,4 @@ const BarebonesLyricsEmbed = (): MessageEmbed => {
   })
 }
 
-export { AboutLyricsFinderEmbed, BarebonesLyricsEmbed, PrivacyPolicyEmbed }
+export { AboutLyricsFinderEmbed, BarebonesLyricsEmbed, PrivacyPolicyEmbed, HelpEmbed }
