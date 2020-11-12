@@ -8,16 +8,11 @@ const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
     author: { name: 'About Lyrics Finder', iconURL: bot.user?.displayAvatarURL() },
     hexColor: 'f3f3cf',
 
-    description: `Lyrics Finder is a bot which searches for Lyrics and displays them in an Embed.
-    It can search for your currently playing Spotify song lyrics automatically.
-    Use the command \`~!help\` to see what the bot can do.
-    Support the bot by voting for the bot by [voting for the bot](https://lyrics-finder.angeloanan.xyz/support)`,
+    description: 'Lyrics Finder is a bot which searches for Lyrics and displays them in an Embed. It can search for your currently playing Spotify song lyrics automatically. Use the command `~!help` to see what the bot can do. Support the bot by voting for the bot by [voting for the bot](https://lyrics-finder.angeloanan.xyz/support)',
 
     fields: [{
       name: '**Useful links**',
-      value: `\`-\` [Invite Lyrics Finder](https://discord.com/oauth2/authorize?client_id=559265456008200222&permissions=314432&scope=bot)\n
-      '\`-\` [Support Server](https://discord.gg/mFvDvHc)\n
-      '\`-\` [Lyrics Finder Website / Docs](https://lyrics-finder.angeloanan.xyz)`
+      value: '`-` [Invite Lyrics Finder](https://discord.com/oauth2/authorize?client_id=559265456008200222&permissions=314432&scope=bot)\n`-` [Support Server](https://discord.gg/mFvDvHc)\n`-` [Lyrics Finder Website / Docs](https://lyrics-finder.angeloanan.xyz)'
     }],
 
     footer: { text: 'Lyrics Finder is developed using discord.js' }
