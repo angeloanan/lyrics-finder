@@ -2,7 +2,7 @@
   "name": "lyrics-finder",
   "version": "3.1.0",
   "description": "Lyrics Finder bot on Discord",
-  "main": "index.js",
+  "main": "index",
   "repository": "https://github.com/angeloanan/lyrics-finder",
   "author": "Christopher Angelo <angelo@angeloanan.xyz>",
   "license": "GPL-3.0-or-later",
