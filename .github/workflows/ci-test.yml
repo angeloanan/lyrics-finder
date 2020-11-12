@@ -1,26 +1,27 @@
-name: NodeJS CI
-
+name: CI - Build
 on: [push]
-
+env:
+  CI: true
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+  	runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [12, 14.15]
 
     steps:
     - uses: actions/checkout@v1
+
     - name: Use NodeJS ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install packages
+
+    - name: Installs dependencies
       run: yarn install
-    - name: Build Typescript
-      run: yarn build
-    - name: Run tests
+
+    - name: Run test
       run: yarn test
       env:
         CI: true
