@@ -36,30 +36,3 @@ export async function scrapeLyricsFromURL (url: string, counter = 1): Promise<st
     }
   }
 }
-
-// export async function scrapeUntilSuccess (url: string): Promise<string> {
-//   return await fetch(backend, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ url: url })
-//   }).then(res => res.text())
-//     .then(res => {
-//       // if (res.length <= 5) scrapeUntilSuccess(url)
-//       return res
-//     })
-//     .catch(err => {
-//       logger.fatal(err, 'Genius Scrape Error')
-//       return 'Unknown Error has occured!'
-//     })
-// }
-
-// /**
-//  * Scrapes lyrics out from a Genius URL
-//  * @param url Genius URL
-//  * @returns Lyrics in plain text
-//  */
-// export async function scrapeLyricsFromURL (url: string): Promise<string> {
-//   return await Promise.resolve(scrapeUntilSuccess(url))
-// }
