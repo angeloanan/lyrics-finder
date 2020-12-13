@@ -18,7 +18,7 @@ export async function scrapeLyricsFromURL (url: string, counter = 1): Promise<st
     const backendUrl = process.env.BACKEND_URL as string
     if (counter >= 5) throw new Error('recursive') // Recursive Counter
 
-    const lyrics = await fetch(backendUrl, {
+    const fetchRequest = await fetch(backendUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -26,13 +26,20 @@ export async function scrapeLyricsFromURL (url: string, counter = 1): Promise<st
       body: JSON.stringify({ url: url })
     })
 
-    return await lyrics.text()
+    if (!fetchRequest.ok) throw new Error('upstream')
+    const fetchData = await fetchRequest.json()
+
+    return fetchData.lyrics
   } catch (e) {
-    if ((e as Error).message === 'recursive') { // Throw everything
-      logger.error({ url }, 'Scrape function reached max depth of recursion')
-      throw newError('recursive', 'Function has reached its max depth of recursion')
-    } else { // Retry
-      return await scrapeLyricsFromURL(url, counter + 1)
+    const error = e as Error
+
+    switch (error.message) {
+      case 'recursive':
+        logger.error({ url }, 'Scrape function reached max depth of recursion')
+        throw newError('recursive', 'Function has reached its max depth of recursion')
+      default:
+        logger.warn({ e }, 'Error fetching lyrics from upstream')
+        return await scrapeLyricsFromURL(url, counter + 1)
     }
   }
 }
