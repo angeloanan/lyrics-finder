@@ -1,35 +1,46 @@
-import fetch from 'node-fetch'
+import 'dotenv/config'
+
+import { SearchResult, Convert as convert } from '../../types/GeniusAPI'
+
 import { geniusAPIBaseURL as APIBaseURL } from '../../config'
-import { Convert as convert, SearchResult } from '../../types/GeniusAPI'
+import fetch from 'node-fetch'
 import logger from '../../utils/logger'
-require('dotenv').config()
+import { newError } from '../../utils'
 
 /**
  * Searches Genius for lyrics
  * @param query Search Query
  * @returns {Promise<SearchResult>} Genius search result
+ * @throws {genius/token} Genius token is not provided
+ * @throws {genius/status} Genius meta is not 200
  */
-export function searchAPI (query: string): Promise<SearchResult> {
-  return new Promise((resolve, reject) => {
-    if (!process.env.GENIUS_TOKEN) throw new Error('Genius Token not provided')
+export async function searchAPI (query: string): Promise<SearchResult> {
+  try {
+    if (process.env.GENIUS_TOKEN == null) throw newError('genius/token', 'Genius token not provided')
 
-    const searchTermEncoded = encodeURI(query)
+    const authHeader = `Bearer ${process.env.GENIUS_TOKEN}`
+    const searchURL = `${APIBaseURL}/search?q=${encodeURI(query)}`
 
-    const authHeader = 'Bearer ' + process.env.GENIUS_TOKEN
-    const searchURL = APIBaseURL + '/search?q=' + searchTermEncoded
+    const fetchRequest = await fetch(searchURL, { headers: { Authorization: authHeader } })
+    const fetchData = await fetchRequest.json()
+    const searchResult = convert.toSearchResult(fetchData) // Quicktype
 
-    fetch(searchURL, { headers: { Authorization: authHeader } })
-      .then(res => res.text())
-      .then(res => {
-        const searchResult = convert.toSearchResult(res)
-        if (searchResult.meta.status !== 200) reject(new Error('Genius Meta Status ' + searchResult.meta.status))
-        resolve(searchResult)
-      })
-      .catch(err => {
-        logger.warn(err, 'Genius SearchAPI Error')
-        reject(err)
-      })
-  })
+    if (searchResult.meta.status !== 200) {
+      logger.warn({ query, searchResult }, `Upstream Error: Genius Meta Status ${searchResult.meta.status}`)
+      throw newError('genius/status', `Genius meta status ${searchResult.meta.status}`)
+    }
+
+    return searchResult
+  } catch (e) {
+    const error = e as Error
+
+    switch (error.name) {
+      case 'genius/status':
+        throw e
+      case 'genius/token':
+        throw new Error('Something went horribly wrong upstream')
+      default:
+        throw e
+    }
+  }
 }
-
-exports.searchAPI = searchAPI
