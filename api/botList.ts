@@ -1,13 +1,13 @@
 import 'dotenv/config'
-import fetch from 'node-fetch'
+
 import { DiscordClient } from '../types/DiscordClient'
+import fetch from 'node-fetch'
 import logger from '../utils/logger'
 
 const topggToken = process.env.TOPGG_TOKEN
 const extremeListToken = process.env.EXTREMELIST_TOKEN
 const discordBotListToken = process.env.DBL_TOKEN
 const discordBotsGGToken = process.env.DISCORDBOTSGG_TOKEN
-const glennBotListToken = process.env.GLENNBOTLIST_TOKEN
 const discordBoatsToken = process.env.DISCORDBOATS_TOKEN
 const discordBotlistSpaceToken = process.env.BOTLISTSPACE_TOKEN
 
@@ -81,23 +81,6 @@ async function postDiscordBotsGG (guildCount: number, botID: string): Promise<vo
   })
 }
 
-async function postGlennBotList (guildCount: number, botID: string): Promise<void> {
-  if (glennBotListToken == null) return
-
-  const glennBotListBody = {
-    serverCount: guildCount
-  }
-
-  await fetch(`https://glennbotlist.xyz/api/bot/${botID}/stats`, {
-    method: 'POST',
-    headers: {
-      Authorization: glennBotListToken,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(glennBotListBody)
-  })
-}
-
 async function postDiscordBoats (guildCount: number, botID: string): Promise<void> {
   if (discordBoatsToken == null) return
 
@@ -144,7 +127,6 @@ export async function update (guildCount: number, bot: DiscordClient): Promise<v
     postExtremeList(guildCount, botID),
     postDiscordBotList(guildCount, botID, userCount),
     postDiscordBotsGG(guildCount, botID),
-    postGlennBotList(guildCount, botID),
     postDiscordBoats(guildCount, botID),
     postBotlistSpace(guildCount, botID)
   ])
