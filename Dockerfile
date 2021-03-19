@@ -4,7 +4,7 @@ WORKDIR /usr/app
 COPY package*.json ./
 # Install build-essentials - https://github.com/mhart/alpine-node/issues/27#issuecomment-390187978
 RUN apk add --no-cache --virtual .build-deps alpine-sdk python3 \
- && yarn install \
+ && yarn install
 COPY . .
 RUN yarn build
 
