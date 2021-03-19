@@ -1,8 +1,7 @@
 import 'dotenv/config'
 
-import { SearchResult, Convert as convert } from '../../types/GeniusAPI'
-
 import { geniusAPIBaseURL as APIBaseURL } from '../../config'
+import { SearchResult } from '../../types/GeniusAPI'
 import fetch from 'node-fetch'
 import logger from '../../utils/logger'
 import { newError } from '../../utils'
@@ -23,7 +22,7 @@ export async function searchAPI (query: string): Promise<SearchResult> {
 
     const fetchRequest = await fetch(searchURL, { headers: { Authorization: authHeader } })
     const fetchData = await fetchRequest.json()
-    const searchResult = convert.toSearchResult(fetchData) // Quicktype
+    const searchResult = fetchData as SearchResult
 
     if (searchResult.meta.status !== 200) {
       logger.warn({ query, searchResult }, `Upstream Error: Genius Meta Status ${searchResult.meta.status}`)

@@ -29,9 +29,9 @@ async function fillBarebonesEmbed (message: Message, song: Result): Promise<void
   const preloadedSongEmbed = new MessageEmbed(BarebonesLyricsEmbed())
   preloadedSongEmbed
     .setTitle(song.title)
-    .setDescription(`*by ${song.primaryArtist.name ?? 'MISSING DATA'}*`)
-    .setURL(song.url ?? 'MISSING DATA')
-    .setThumbnail(song.songArtImageUrl ?? 'MISSING DATA')
+    .setDescription(`*by ${song.primary_artist.name ?? 'MISSING DATA'}*`)
+    .setURL(song.url ?? 'https://genius.com')
+    .setThumbnail(song.song_art_image_url ?? 'https://genius.com')
     .addField(LoadingEmoji + ' Lyrics Loading...', '\u200B')
 
   await message.edit(preloadedSongEmbed)
@@ -76,7 +76,7 @@ export async function completeSearch (searchTerm: string, message: Promise<Messa
         fields: {
           query: searchTerm,
           songTitle: song.title,
-          songArtist: song.primaryArtist.name,
+          songArtist: song.primary_artist.name,
           totalTime: (Date.now() - response.createdTimestamp)
         }
       })
