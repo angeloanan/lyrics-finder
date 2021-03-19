@@ -46,7 +46,7 @@ bot.on('message', async (message) => {
       break
     case 'np':
     case 'nowplaying':
-      require('./commands/search').nowPlaying(bot, message)
+      require('./commands/nowplaying').nowPlaying(bot, message)
       break
     case 'autosearch':
     case 'auto':
