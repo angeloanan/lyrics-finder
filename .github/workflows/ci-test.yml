@@ -2,23 +2,21 @@ name: CI - Test
 on: [push]
 jobs:
   testing:
-    name: Tests the code
-  	runs-on: ubuntu-20.04
-
+    name: Run unit tests on the code
+  	runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12, 14.15]
-
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
-    - name: Use NodeJS ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Installs dependencies
-      run: yarn install
+      - name: Installs dependencies
+        run: yarn install
 
-    - name: Run test
-      run: yarn test
+      - name: Run test
+        run: yarn test
