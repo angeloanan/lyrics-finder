@@ -121,22 +121,5 @@ export async function search (_bot: DiscordClient, message: Message): Promise<vo
     message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\n\`${err}\``)
   })
 
-  completeSearch(searchTerm, responseMessage, 'search')
-}
-
-export async function nowPlaying (_bot: Client, message: Message): Promise<void> {
-  const responseMessage = message.channel.send(BarebonesLyricsEmbed())
-
-  responseMessage.catch((err) => {
-    message.channel.send(`I am not able to send embeds here!\nPlease recheck the permission of the bot!\`${err}\``)
-  })
-
-  getSpotifySong(message.author.presence)
-    .then(searchTerm => {
-      completeSearch(searchTerm, responseMessage, 'nowplaying')
-    })
-    .catch(async () => {
-      // FIXME: Typescript Reject type error
-      (await responseMessage).edit('You are not listening to any Spotify song or you didn\'t display them to your profile!', { embed: null })
-    })
+  await completeSearch(searchTerm, responseMessage, 'search')
 }
