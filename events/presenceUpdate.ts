@@ -2,12 +2,13 @@ import type { Client, Presence, TextChannel } from 'discord.js'
 
 import type { AutoSearchDBObject } from '../types/autoSearchDBObject'
 import { BarebonesLyricsEmbed } from '../constants/embeds'
+import { LyricsFinderError } from '../types/ErrorCode'
 import { completeSearch } from '../commands/search'
 import db from 'quick.db'
 import { getSpotifySong } from '../utils/getSpotifySong'
+import logger from '../utils/logger'
 
 // Spotify auto lyrics search
-
 export function deleteUserFromAutoSearchDB (userID: string): void {
   db.delete(`autoSearchList.${userID}`)
   db.delete(`currentSong.${userID}`)
@@ -47,9 +48,11 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
       // Set currentSong table
       db.set(`currentSong.${userID}`, songQuery)
 
-      completeSearch(songQuery, responseMessage, 'autosearch')
+      await completeSearch(songQuery, responseMessage, 'autosearch')
     })
     .catch(err => {
-      if ((err as Error).message === 'Spotify Song Not Found') { } else { console.error('Presence Update Error', err) }
+      if ((err as Error).message !== 'Spotify Song Not Found') {
+        logger.error(err, LyricsFinderError.AUTOSEARCH_PRESENCE_UPDATE)
+      }
     })
 }
