@@ -6,6 +6,9 @@
     "simple-import-sort"
   ],
   "extends": "standard-with-typescript",
+  "rules": {
+    "no-void":"off"
+  },
   "parserOptions": {
     "project": "./tsconfig.json"
   }
