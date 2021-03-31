@@ -2,7 +2,7 @@ import { Client, Message } from 'discord.js'
 
 import { AboutLyricsFinderEmbed } from '../constants/embeds'
 import { LyricsFinderError } from '../types/ErrorCode'
-import { log } from '../utils/logger'
+import logger from '../utils/logger'
 
 export async function exec (bot: Client, message: Message): Promise<void> {
   try {
@@ -14,6 +14,6 @@ export async function exec (bot: Client, message: Message): Promise<void> {
 
     void message.channel.send(`Something went wrong! Please recheck the bot's permission\n\`\`\`js\n${err.message ?? err.name ?? 'Unknown Error!'}\`\`\``)
 
-    log(e, LyricsFinderError.COMMAND_ABOUT)
+    logger.error(e, LyricsFinderError.COMMAND_ABOUT)
   }
 }
