@@ -1,6 +1,8 @@
 import { Client, Message } from 'discord.js'
 
 import { AboutLyricsFinderEmbed } from '../constants/embeds'
+import { LyricsFinderError } from '../types/ErrorCode'
+import { log } from '../utils/logger'
 
 export async function exec (bot: Client, message: Message): Promise<void> {
   try {
@@ -10,9 +12,8 @@ export async function exec (bot: Client, message: Message): Promise<void> {
   } catch (e) {
     const err = e as Error
 
-    // TODO: Actually handle the error properly
-    await message.channel.send(`I am not able to send Embeds!
-    Please recheck the bot's permission
-    \`${err.message ?? err.name ?? 'Unknown Error!'}\``)
+    void message.channel.send(`Something went wrong! Please recheck the bot's permission\n\`\`\`js\n${err.message ?? err.name ?? 'Unknown Error!'}\`\`\``)
+
+    log(e, LyricsFinderError.COMMAND_ABOUT)
   }
 }
