@@ -3,12 +3,12 @@ import { newError } from '.'
 
 /**
  * Gets an user's currently playing Spotify song
- * @param presence User's Presence
+ * @param userPresence User's Presence
  * @returns {string} Song Title and Artist: `<Song Name> - <Song Artist>`
  */
-export async function getSpotifySong (presence: Presence): Promise<string> {
+export async function getSpotifySong (userPresence: Presence): Promise<string> {
   try {
-    const presences = presence.activities
+    const presences = userPresence.activities
 
     const spotifyPresence = await Promise.any([
       ...presences.map(async (presence) => {
