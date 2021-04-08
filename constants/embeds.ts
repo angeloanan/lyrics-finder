@@ -1,7 +1,8 @@
-import { Client, MessageEmbed } from 'discord.js'
+import type { Client, EmbedField } from 'discord.js'
 import { getTips, wrapInCodeblocks } from '../utils'
 
 import { LoadingEmoji } from './emojis'
+import { MessageEmbed } from 'discord.js'
 import prettyms from 'pretty-ms'
 
 const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
@@ -73,14 +74,6 @@ const HelpEmbed = (bot: Client): MessageEmbed => {
   })
 }
 
-const BarebonesLyricsEmbed = (): MessageEmbed => {
-  return new MessageEmbed({
-    title: `${LoadingEmoji} Loading...`,
-    hexColor: 'FFFF64',
-    footer: { text: `by Lyrics Finder | ${getTips()}` }
-  })
-}
-
 const InfoEmbed = (bot: Client): MessageEmbed => {
   const avatar = bot.user?.displayAvatarURL()
   const uptime = prettyms(bot.uptime ?? 0, { verbose: true, unitCount: 2, secondsDecimalDigits: 0 })
@@ -128,5 +121,17 @@ const InfoEmbed = (bot: Client): MessageEmbed => {
     footer: { text: 'Found any bugs? Report it at https://discord.gg/qDX9rua' }
   })
 }
+
+const BarebonesLyricsEmbed = new MessageEmbed({
+  title: `${LoadingEmoji} Loading...`,
+  hexColor: 'FFFF64',
+  footer: { text: `by Lyrics Finder | ${getTips()}` }
+})
+
+export const embedTooLongField: EmbedField[] = [{
+  name: 'Lyrics is too long!',
+  value: 'I can\'t display the lyrics of this song as it is too long.\nYou can click on the song title to view the lyrics on your Browser!',
+  inline: false
+}]
 
 export { AboutLyricsFinderEmbed, BarebonesLyricsEmbed, PrivacyPolicyEmbed, HelpEmbed, InfoEmbed }
