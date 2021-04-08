@@ -2,11 +2,9 @@ import type { Client, Presence, TextChannel } from 'discord.js'
 
 import type { AutoSearchDBObject } from '../types/autoSearchDBObject'
 import { BarebonesLyricsEmbed } from '../constants/embeds'
-import { LyricsFinderError } from '../types/ErrorCode'
 import { completeSearch } from '../commands/search'
 import db from 'quick.db'
 import { getSpotifySong } from '../utils/getSpotifySong'
-import logger from '../utils/logger'
 
 // Spotify auto lyrics search
 export function deleteUserFromAutoSearchDB (userID: string): void {
@@ -30,29 +28,25 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
   const guild = bot.guilds.cache.get(guildID)
 
   // If Guild were deleted, unavailable or the bot was kicked
-  if (typeof guild === 'undefined' || !guild.available) { return deleteUserFromAutoSearchDB(userID) }
+  if (typeof guild === 'undefined' || !guild.available) return deleteUserFromAutoSearchDB(userID)
 
   const channel = bot.channels.cache.get(channelID) as TextChannel | undefined
 
   // If channel were deleted
-  if (typeof channel === 'undefined') { return deleteUserFromAutoSearchDB(userID) }
+  if (typeof channel === 'undefined') return deleteUserFromAutoSearchDB(userID)
 
   // Start sending messages etc
-  getSpotifySong(presence)
-    .then(async songQuery => {
-      // If presence were updated while still listening to the same song
-      if (db.get(`currentSong.${userID}`) === songQuery) return
+  const songQuery = getSpotifySong(presence)
 
-      const responseMessage = channel.send(`<@${userID}>, here are your lyrics`, { embed: BarebonesLyricsEmbed() })
+  if (typeof songQuery === 'string') {
+    // If presence were updated while still listening to the same song
+    if (db.get(`currentSong.${userID}`) === songQuery) return
 
-      // Set currentSong table
-      db.set(`currentSong.${userID}`, songQuery)
+    const responseMessage = channel.send(`<@${userID}>, here are your lyrics`, { embed: BarebonesLyricsEmbed })
 
-      await completeSearch(songQuery, responseMessage, 'autosearch')
-    })
-    .catch(err => {
-      if ((err as Error).message !== 'Spotify Song Not Found') {
-        logger.error(err, LyricsFinderError.AUTOSEARCH_PRESENCE_UPDATE)
-      }
-    })
+    // Set currentSong table
+    db.set(`currentSong.${userID}`, songQuery)
+
+    await completeSearch(songQuery, responseMessage, 'autosearch')
+  }
 }
