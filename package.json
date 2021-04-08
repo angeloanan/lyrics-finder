@@ -46,13 +46,8 @@
     "clean": "rm -r node_modules && rm -r target",
     "dev": "yarn build && node ./target/index.js",
     "profiler": "tsc && node ./target/index.js --harmony --prof",
-    "format": "eslint --fix"
-  },
-  "husky": {
-    "hooks": {
-      "post-merge": "yarn install",
-      "pre-commit": "lint-staged"
-    }
+    "format": "eslint --fix",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.ts": "eslint --cache --fix"
