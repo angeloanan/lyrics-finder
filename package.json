@@ -30,7 +30,7 @@
     "bufferutil": "^4.0.1",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "execall": "^2.0.0",
+    "execall": "^3.0.0",
     "node-fetch": "^2.6.0",
     "pino": "^6.4.0",
     "pretty-ms": "^7.0.0",

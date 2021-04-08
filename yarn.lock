@@ -1375,12 +1375,12 @@ cliui@^6.0.0:
     strip-ansi "^6.0.0"
     wrap-ansi "^6.2.0"
 
-clone-regexp@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/clone-regexp/-/clone-regexp-2.2.0.tgz#7d65e00885cd8796405c35a737e7a86b7429e36f"
-  integrity sha512-beMpP7BOtTipFuW8hrJvREQ2DrRu3BE7by0ZpibtfBA+qfHYvMGTc2Yb1JMYPKg/JUw0CHYvpg796aNTSW9z7Q==
+clone-regexp@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/clone-regexp/-/clone-regexp-3.0.0.tgz#c6dd5c6b85482306778f3dc4ac2bb967079069c2"
+  integrity sha512-ujdnoq2Kxb8s3ItNBtnYeXdm07FcU0u8ARAT1lQ2YdMwQC+cdiXX8KoqMVuglztILivceTtp4ivqGSmEmhBUJw==
   dependencies:
-    is-regexp "^2.0.0"
+    is-regexp "^3.0.0"
 
 co@^4.6.0:
   version "4.6.0"
@@ -2024,12 +2024,12 @@ execa@^4.0.0, execa@^4.1.0:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
-execall@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/execall/-/execall-2.0.0.tgz#16a06b5fe5099df7d00be5d9c06eecded1663b45"
-  integrity sha512-0FU2hZ5Hh6iQnarpRtQurM/aAvp3RIbfvgLHrcqJYzhXyV2KFruhuChf9NC6waAhiUR7FFtlugkI4p7f2Fqlow==
+execall@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/execall/-/execall-3.0.0.tgz#7c182d52a55fd6dfce3e957eb4829c1379a2b81b"
+  integrity sha512-FaJeg2uWc8ADWnAnoDbxhAAr4U/j86ujlojnEpnBHQ4FM2viZKNjjyO2O6AKG6+9usZAnqsI4+1+w6vzx0x4uw==
   dependencies:
-    clone-regexp "^2.1.0"
+    clone-regexp "^3.0.0"
 
 exit@^0.1.2:
   version "0.1.2"
@@ -2783,10 +2783,10 @@ is-regexp@^1.0.0:
   resolved "https://registry.yarnpkg.com/is-regexp/-/is-regexp-1.0.0.tgz#fd2d883545c46bac5a633e7b9a09e87fa2cb5069"
   integrity sha1-/S2INUXEa6xaYz57mgnof6LLUGk=
 
-is-regexp@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/is-regexp/-/is-regexp-2.1.0.tgz#cd734a56864e23b956bf4e7c66c396a4c0b22c2d"
-  integrity sha512-OZ4IlER3zmRIoB9AqNhEggVxqIH4ofDns5nRrPS6yQxXE1TPCUpFznBfRQmQa8uC+pXqjMnukiJBxCisIxiLGA==
+is-regexp@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/is-regexp/-/is-regexp-3.0.0.tgz#6f92c66ecd4206a9e41fbabbd63a8e05ba76fd0c"
+  integrity sha512-qbTM1elwEGoOK1GK2NngtLxRohdSgJME5vjQQaOoSWkzIHJVCxT+t+BO1/a7EhJixZOUUMda7Uj5gxjbJJhieA==
 
 is-stream@^1.1.0:
   version "1.1.0"
