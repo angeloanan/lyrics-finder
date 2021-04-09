@@ -124,7 +124,7 @@ const InfoEmbed = (bot: Client): MessageEmbed => {
 
 const BarebonesLyricsEmbed = new MessageEmbed({
   title: `${LoadingEmoji} Loading...`,
-  hexColor: 'FFFF64',
+  color: '#FFFF64',
   footer: { text: `by Lyrics Finder | ${getTips()}` }
 })
 
