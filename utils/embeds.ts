@@ -20,7 +20,7 @@ const splitOptions: SplitOptions = {
  */
 export const fillBarebonesEmbed = async (message: Message, song: Result): Promise<void> => {
   // Create a copy of Embed Barebones and fill in the blanks
-  const preloadedSongEmbed = new MessageEmbed(BarebonesLyricsEmbed)
+  const preloadedSongEmbed = new MessageEmbed(BarebonesLyricsEmbed())
   preloadedSongEmbed
     .setTitle(song.title)
     .setDescription(`*by ${song.primary_artist.name ?? 'MISSING DATA'}*`)

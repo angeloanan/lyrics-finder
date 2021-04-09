@@ -28,7 +28,9 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
   const guild = bot.guilds.cache.get(guildID)
 
   // If Guild were deleted, unavailable or the bot was kicked
-  if (typeof guild === 'undefined' || !guild.available) return deleteUserFromAutoSearchDB(userID)
+  if (typeof guild === 'undefined' || !guild.available) {
+    return deleteUserFromAutoSearchDB(userID)
+  }
 
   const channel = bot.channels.cache.get(channelID) as TextChannel | undefined
 
@@ -42,7 +44,9 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
     // If presence were updated while still listening to the same song
     if (db.get(`currentSong.${userID}`) === songQuery) return
 
-    const responseMessage = channel.send(`<@${userID}>, here are your lyrics`, { embed: BarebonesLyricsEmbed })
+    const responseMessage = channel.send(`<@${userID}>, here are your lyrics`, {
+      embed: BarebonesLyricsEmbed()
+    })
 
     // Set currentSong table
     db.set(`currentSong.${userID}`, songQuery)
