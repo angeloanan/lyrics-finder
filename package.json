@@ -23,7 +23,7 @@
     "eslint-plugin-standard": "4",
     "husky": "^6.0.0",
     "jest": "^26.4.0",
-    "lint-staged": "^10.2.11",
+    "lint-staged": "^11.0.0",
     "ts-jest": "^26.1.1"
   },
   "dependencies": {
