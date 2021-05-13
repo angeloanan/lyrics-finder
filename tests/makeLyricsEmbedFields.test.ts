@@ -1,4 +1,4 @@
-import { makeLyricsEmbedField } from '../utils/embeds'
+import { makeLyricsEmbedField } from '../src/utils/embeds'
 
 describe('Standard Lyrics', () => {
   test.concurrent('Single correct section', async () => {

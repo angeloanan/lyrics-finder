@@ -11,7 +11,9 @@ export async function exec (bot: Client, message: Message): Promise<void> {
   } catch (e) {
     try {
       const error = e as Error
-      await message.channel.send(`I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${error.message}\``)
+      await message.channel.send(
+        `I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${error.message}\``
+      )
     } catch (ee) {
       logger.error({ e, ee }, 'Unable to send help message')
     }

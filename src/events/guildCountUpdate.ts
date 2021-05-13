@@ -7,9 +7,7 @@ async function main (bot: DiscordClient, _guild: Guild): Promise<void> {
   if (bot.user == null) return
 
   // Asynchronously update events
-  await Promise.allSettled([
-    update(bot.guilds.cache.size, bot)
-  ])
+  await Promise.allSettled([update(bot.guilds.cache.size, bot)])
 }
 
 exports.handle = main

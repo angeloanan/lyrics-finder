@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import { geniusAPIBaseURL as APIBaseURL } from '../../config'
+import { geniusAPIBaseURL as APIBaseURL } from '../../../config'
 import { SearchResult } from '../../types/GeniusAPI'
 import fetch from 'node-fetch'
 import logger from '../../utils/logger'

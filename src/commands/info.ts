@@ -8,7 +8,9 @@ async function main (bot: Client, message: Message): Promise<void> {
   } catch (e) {
     const stringifiedError = JSON.stringify(e, Object.getOwnPropertyNames(e))
 
-    await message.channel.send(`I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${stringifiedError}\``)
+    await message.channel.send(
+      `I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${stringifiedError}\``
+    )
   }
 }
 

@@ -4,7 +4,7 @@ import { BarebonesLyricsEmbed } from '../constants/embeds'
 import { LoadingEmoji } from '../constants/emojis'
 import type { Result } from '../types/GeniusAPI'
 import execall from 'execall'
-import { regex as lyricsRegex } from '../config'
+import { regex as lyricsRegex } from '../../config'
 import { safeTrim } from './safeTrim'
 
 const splitMessage = Util.splitMessage

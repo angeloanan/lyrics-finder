@@ -1,19 +1,23 @@
 import 'dotenv/config'
 
 import Discord from 'discord.js'
-import { DiscordClient } from './types/DiscordClient'
-import { PrivacyPolicyEmbed } from './constants/embeds'
+import { DiscordClient } from './src/types/DiscordClient'
+import { PrivacyPolicyEmbed } from './src/constants/embeds'
 import { clientOpts } from './config'
-import logger from './utils/logger'
+import logger from './src/utils/logger'
 
 const bot = new Discord.Client(clientOpts) as DiscordClient
 bot.logger = logger
 
 bot.on('message', async (message) => {
-  if (message.author.bot) return // Bot user
-  if (message.cleanContent.startsWith('@Lyrics Finder')) return await message.channel.send('Mentions are not supported anymore!\nThe bot\'s prefix is now `~!`. Try `~!help`!')
-  if (!message.content.startsWith('~!')) return // Command prefix
-  if (message.content.length <= 2) return // Prefix only
+  if (message.author.bot) return
+  if (message.cleanContent.startsWith('@Lyrics Finder')) {
+    return void await message.channel.send(
+      "Mentions are not supported anymore!\nThe bot's prefix is now `~!`. Try `~!help`!"
+    )
+  }
+  if (!message.content.startsWith('~!')) return
+  if (message.content.length <= 2) return
 
   // If message starts with a mention. Delete this after some time
 
@@ -53,7 +57,9 @@ bot.on('message', async (message) => {
       require('./commands/autosearch').exec(bot, message)
       break
     case 'support':
-      message.channel.send('**Support the bot (and the creator) here**: https://lyrics-finder.angeloanan.xyz/support')
+      message.channel.send(
+        '**Support the bot (and the creator) here**: https://lyrics-finder.angeloanan.xyz/support'
+      )
       break
     case 'privacy':
     case 'privacypolicy':
@@ -63,6 +69,7 @@ bot.on('message', async (message) => {
     case 'stopautosearch':
     case 'stopauto':
       require('./commands/stopautosearch').exec(bot, message)
+      break
   }
 })
 

@@ -1,4 +1,4 @@
-import { safeTrim } from '../utils/safeTrim'
+import { safeTrim } from '../src/utils/safeTrim'
 
 test('Safe Trim - Undefined', () => {
   const a = undefined

@@ -32,10 +32,8 @@ export async function exec (_bot: DiscordClient, message: Message): Promise<void
     if (dbObject.guildID === guildID) {
       db.delete(`autoSearchList.${targetUserID}`)
       await message.react('👍')
-      return
     }
+  } else {
+    await message.channel.send('❌ That user is not using autosearch in this server')
   }
-
-  // Catch all
-  await message.channel.send('❌ That user is not using autosearch in this server')
 }

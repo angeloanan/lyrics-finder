@@ -2,7 +2,7 @@ import 'dotenv/config'
 
 import { BarebonesLyricsEmbed, embedTooLongField } from '../constants/embeds'
 import { Message, MessageEmbed } from 'discord.js'
-import { customEmotesRegex, twemojiRegex } from '../config'
+import { customEmotesRegex, twemojiRegex } from '../../config'
 import { fillBarebonesEmbed, makeLyricsEmbedField } from '../utils/embeds'
 import logger, { logSearches } from '../utils/logger'
 
