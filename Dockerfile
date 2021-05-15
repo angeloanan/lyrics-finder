@@ -1,5 +1,5 @@
 # Build stage
-FROM node:14-alpine AS build
+FROM node:16-alpine AS build
 WORKDIR /usr/app
 COPY package*.json ./
 # Install build-essentials - https://github.com/mhart/alpine-node/issues/27#issuecomment-390187978
@@ -9,7 +9,7 @@ COPY . .
 RUN yarn build
 
 # App stage
-FROM node:14-alpine as app
+FROM node:16-alpine as app
 WORKDIR /usr/app
 COPY package*.json ./
 ENV NODE_ENV=production
