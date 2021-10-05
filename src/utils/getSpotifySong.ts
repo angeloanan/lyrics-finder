@@ -5,11 +5,12 @@ import type { Presence } from 'discord.js'
  * @param userPresence User's Presence
  * @returns {string} Song Title and Artist: `<Song Name> - <Song Artist>`
  */
-export function getSpotifySong (userPresence: Presence): string | false {
+export function getSpotifySong(userPresence: Presence | null): string | null {
+  if (userPresence == null) return null
   const presences = userPresence.activities
 
-  presences.forEach((presence) => {
-    if (presence.name === 'Spotify' && presence.applicationID === null) {
+  presences.forEach(presence => {
+    if (presence.name === 'Spotify' && presence.applicationId === null) {
       // Spotify - Presence#state = Artists, seperated by `;`
       // Spotify - Presence#details = Song Title
 
@@ -25,5 +26,5 @@ export function getSpotifySong (userPresence: Presence): string | false {
     }
   })
 
-  return false
+  return null
 }

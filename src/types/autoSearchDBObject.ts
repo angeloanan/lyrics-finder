@@ -1,4 +1,4 @@
 export type AutoSearchDBObject = {
-  guildID: string;
-  channelID: string;
+  guildID: string
+  channelID: string
 }

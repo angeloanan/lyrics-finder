@@ -13,20 +13,29 @@ import { newError } from '../../utils'
  * @throws {genius/token} Genius token is not provided
  * @throws {genius/status} Genius meta is not 200
  */
-export async function searchAPI (query: string): Promise<SearchResult> {
+export async function searchAPI(query: string): Promise<SearchResult> {
   try {
-    if (process.env.GENIUS_TOKEN == null) throw newError('genius/token', 'Genius token not provided')
+    if (process.env.GENIUS_TOKEN == null)
+      throw newError('genius/token', 'Genius token not provided')
 
     const authHeader = `Bearer ${process.env.GENIUS_TOKEN}`
     const searchURL = `${APIBaseURL}/search?q=${encodeURI(query)}`
 
-    const fetchRequest = await fetch(searchURL, { headers: { Authorization: authHeader } })
+    const fetchRequest = await fetch(searchURL, {
+      headers: { Authorization: authHeader }
+    })
     const fetchData = await fetchRequest.json()
     const searchResult = fetchData as SearchResult
 
     if (searchResult.meta.status !== 200) {
-      logger.warn({ query, searchResult }, `Upstream Error: Genius Meta Status ${searchResult.meta.status}`)
-      throw newError('genius/status', `Genius meta status ${searchResult.meta.status}`)
+      logger.warn(
+        { query, searchResult },
+        `Upstream Error: Genius Meta Status ${searchResult.meta.status}`
+      )
+      throw newError(
+        'genius/status',
+        `Genius meta status ${searchResult.meta.status}`
+      )
     }
 
     return searchResult

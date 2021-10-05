@@ -11,7 +11,7 @@ const discordBotsGGToken = process.env.DISCORDBOTSGG_TOKEN
 const discordBoatsToken = process.env.DISCORDBOATS_TOKEN
 const discordBotlistSpaceToken = process.env.BOTLISTSPACE_TOKEN
 
-async function postTopGG (guildCount: number, botID: string): Promise<void> {
+async function postTopGG(guildCount: number, botID: string): Promise<void> {
   if (topggToken == null) return
 
   const topggBody = {
@@ -28,7 +28,10 @@ async function postTopGG (guildCount: number, botID: string): Promise<void> {
   })
 }
 
-async function postExtremeList (guildCount: number, botID: string): Promise<void> {
+async function postExtremeList(
+  guildCount: number,
+  botID: string
+): Promise<void> {
   if (extremeListToken == null) return
 
   const topggBody = {
@@ -45,7 +48,11 @@ async function postExtremeList (guildCount: number, botID: string): Promise<void
   })
 }
 
-async function postDiscordBotList (guildCount: number, botID: string, userCount: number): Promise<void> {
+async function postDiscordBotList(
+  guildCount: number,
+  botID: string,
+  userCount: number
+): Promise<void> {
   if (discordBotListToken == null) return
 
   const discordBotListBody = {
@@ -64,7 +71,10 @@ async function postDiscordBotList (guildCount: number, botID: string, userCount:
   })
 }
 
-async function postDiscordBotsGG (guildCount: number, botID: string): Promise<void> {
+async function postDiscordBotsGG(
+  guildCount: number,
+  botID: string
+): Promise<void> {
   if (discordBotsGGToken == null) return
 
   const discordBotsGGBody = {
@@ -81,7 +91,10 @@ async function postDiscordBotsGG (guildCount: number, botID: string): Promise<vo
   })
 }
 
-async function postDiscordBoats (guildCount: number, botID: string): Promise<void> {
+async function postDiscordBoats(
+  guildCount: number,
+  botID: string
+): Promise<void> {
   if (discordBoatsToken == null) return
 
   const discordBoatsBody = {
@@ -98,7 +111,10 @@ async function postDiscordBoats (guildCount: number, botID: string): Promise<voi
   })
 }
 
-async function postBotlistSpace (guildCount: number, botID: string): Promise<void> {
+async function postBotlistSpace(
+  guildCount: number,
+  botID: string
+): Promise<void> {
   if (discordBotlistSpaceToken == null) return
 
   const discordBotlistSpaceBody = {
@@ -115,7 +131,10 @@ async function postBotlistSpace (guildCount: number, botID: string): Promise<voi
   })
 }
 
-export async function update (guildCount: number, bot: DiscordClient): Promise<void> {
+export async function update(
+  guildCount: number,
+  bot: DiscordClient
+): Promise<void> {
   const botID = bot.user?.id
   const userCount = bot.users.cache.size
 
@@ -133,12 +152,15 @@ export async function update (guildCount: number, bot: DiscordClient): Promise<v
 
   let allSucess = true
 
-  fetching.forEach((promiseRes) => {
+  fetching.forEach(promiseRes => {
     if (promiseRes.status === 'rejected') {
       logger.error(promiseRes.reason)
       allSucess = false
     }
   })
 
-  bot.logger.info({ guildCount, userCount, success: allSucess }, 'Guild count update')
+  bot.logger.info(
+    { guildCount, userCount, success: allSucess },
+    'Guild count update'
+  )
 }

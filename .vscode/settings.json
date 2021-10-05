@@ -1,3 +1,4 @@
 {
-  "dimmer.enabled": false
+  "dimmer.enabled": false,
+  "discord.enabled": false
 }

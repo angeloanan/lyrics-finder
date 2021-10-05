@@ -20,7 +20,7 @@ export interface Hit {
 }
 
 export enum Index {
-  Song = 'song',
+  Song = 'song'
 }
 
 export interface Result {

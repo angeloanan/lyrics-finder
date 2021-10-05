@@ -1,4 +1,10 @@
-import { EmbedField, Message, MessageEmbed, SplitOptions, Util } from 'discord.js'
+import {
+  EmbedField,
+  Message,
+  MessageEmbed,
+  SplitOptions,
+  Util
+} from 'discord.js'
 
 import { BarebonesLyricsEmbed } from '../constants/embeds'
 import { LoadingEmoji } from '../constants/emojis'
@@ -18,7 +24,10 @@ const splitOptions: SplitOptions = {
  * @param message Barebone Preload Embed
  * @param song Genius Song Result
  */
-export const fillBarebonesEmbed = async (message: Message, song: Result): Promise<void> => {
+export const fillBarebonesEmbed = async (
+  message: Message,
+  song: Result
+): Promise<void> => {
   // Create a copy of Embed Barebones and fill in the blanks
   const preloadedSongEmbed = new MessageEmbed(BarebonesLyricsEmbed())
   preloadedSongEmbed
@@ -42,13 +51,15 @@ export const createEmbedField = (name?: string, value?: string): EmbedField => {
   }
 }
 
-export async function makeLyricsEmbedField (lyrics: string): Promise<EmbedField[]> {
+export async function makeLyricsEmbedField(
+  lyrics: string
+): Promise<EmbedField[]> {
   // Regex will match if lyrics is following Genius' standard
   const matches = execall(lyricsRegex, lyrics)
 
   // Pattern found / following Genius Standard
   if (matches.length !== 0) {
-    return matches.flatMap((section) => {
+    return matches.flatMap(section => {
       const sectionTitle = section.subMatches[0]
       const sectionLyrics = safeTrim(section.subMatches[1], '\u200B')
 

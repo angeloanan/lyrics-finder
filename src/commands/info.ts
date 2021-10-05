@@ -1,17 +1,18 @@
-import type { Client, Message } from 'discord.js'
+import type { CommandInteraction } from 'discord.js'
 
 import { InfoEmbed } from '../constants/embeds'
+import { Command } from '../lib/struct/Command'
 
-async function main (bot: Client, message: Message): Promise<void> {
-  try {
-    await message.channel.send(InfoEmbed(bot))
-  } catch (e) {
-    const stringifiedError = JSON.stringify(e, Object.getOwnPropertyNames(e))
+export class InfoCommand extends Command {
+  config = {
+    name: 'info',
+    description: "Shows the bot's detailed information"
+  }
 
-    await message.channel.send(
-      `I am not able to send Embeds!\nPlease recheck the bot's permission\n\`${stringifiedError}\``
-    )
+  async run(interaction: CommandInteraction) {
+    await interaction.reply({
+      embeds: [InfoEmbed(interaction.client)],
+      ephemeral: true
+    })
   }
 }
-
-exports.exec = main

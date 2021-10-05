@@ -3,7 +3,7 @@ import type { Guild } from 'discord.js'
 import { update } from '../api/botList'
 
 // List your event handlers here.
-async function main (bot: DiscordClient, _guild: Guild): Promise<void> {
+async function main(bot: DiscordClient, _guild: Guild): Promise<void> {
   if (bot.user == null) return
 
   // Asynchronously update events

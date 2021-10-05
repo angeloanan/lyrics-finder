@@ -5,10 +5,13 @@ import { LoadingEmoji } from './emojis'
 import { MessageEmbed } from 'discord.js'
 import prettyms from 'pretty-ms'
 
-const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
+export const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
   return new MessageEmbed({
-    author: { name: 'About Lyrics Finder', iconURL: bot.user?.displayAvatarURL() },
-    hexColor: 'f3f3cf',
+    author: {
+      name: 'About Lyrics Finder',
+      iconURL: bot.user?.displayAvatarURL()
+    },
+    hexColor: '#f3f3cf',
 
     description:
       'Lyrics Finder is a bot which searches for Lyrics and displays them in an Embed. It can search for your currently playing Spotify song lyrics automatically. Use the command `~!help` to see what the bot can do. Support the bot by voting for the bot by [voting for the bot](https://lyrics-finder.angeloanan.xyz/support)',
@@ -25,7 +28,7 @@ const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
   })
 }
 
-const PrivacyPolicyEmbed = (): MessageEmbed => {
+export const PrivacyPolicyEmbed = (): MessageEmbed => {
   return new MessageEmbed({
     title: 'Lyrics Finder Privacy Policy',
     description:
@@ -39,17 +42,22 @@ const PrivacyPolicyEmbed = (): MessageEmbed => {
       }
     ],
 
-    footer: { text: 'You can contact me if you have any questions | Last updated at ' },
+    footer: {
+      text: 'You can contact me if you have any questions | Last updated at '
+    },
     timestamp: Date.parse('Aug 19 2020 03:45 GMT+7')
   })
 }
 
-const HelpEmbed = (bot: Client): MessageEmbed => {
+export const HelpEmbed = (bot: Client): MessageEmbed => {
   return new MessageEmbed({
-    author: { name: 'Lyrics Finder Help | Commands', icon_url: bot.user?.displayAvatarURL() },
+    author: {
+      name: 'Lyrics Finder Help | Commands',
+      icon_url: bot.user?.displayAvatarURL()
+    },
     description:
       "Here is the bot's available commands.\nJust add the prefix `~!` before one of the commands",
-    hexColor: '2F3136',
+    hexColor: '#2F3136',
 
     fields: [
       {
@@ -59,7 +67,13 @@ const HelpEmbed = (bot: Client): MessageEmbed => {
       },
       {
         name: '💬 • Bot Info (**5**)',
-        value: wrapInCodeblocks(['help', 'ping', 'invite', 'stats', 'privacypolicy']),
+        value: wrapInCodeblocks([
+          'help',
+          'ping',
+          'invite',
+          'stats',
+          'privacypolicy'
+        ]),
         inline: true
       },
       {
@@ -69,17 +83,23 @@ const HelpEmbed = (bot: Client): MessageEmbed => {
       }
     ],
 
-    footer: { text: "Need help or something doesn't work? Join the support server!" }
+    footer: {
+      text: "Need help or something doesn't work? Join the support server!"
+    }
   })
 }
 
-const InfoEmbed = (bot: Client): MessageEmbed => {
+export const InfoEmbed = (bot: Client): MessageEmbed => {
   const avatar = bot.user?.displayAvatarURL()
-  const uptime = prettyms(bot.uptime ?? 0, { verbose: true, unitCount: 2, secondsDecimalDigits: 0 })
+  const uptime = prettyms(bot.uptime ?? 0, {
+    verbose: true,
+    unitCount: 2,
+    secondsDecimalDigits: 0
+  })
 
   return new MessageEmbed({
     title: 'Lyrics Finder Information',
-    hexColor: '36393E',
+    hexColor: '#36393E',
     thumbnail: { url: avatar },
 
     fields: [
@@ -95,7 +115,9 @@ const InfoEmbed = (bot: Client): MessageEmbed => {
       {
         name: 'Live Statistics',
         value: `
-      Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds
+      Serving ${bot.users.cache.size - 1} users in ${
+          bot.guilds.cache.size
+        } guilds
       Has been online for ${uptime}
       Using ${Math.round(process.memoryUsage().rss / 1000 / 1000)}MB of memory
       Average ping is around ${Math.round(bot.ws.ping)}ms
@@ -126,10 +148,10 @@ const InfoEmbed = (bot: Client): MessageEmbed => {
   })
 }
 
-const BarebonesLyricsEmbed = (): MessageEmbed => {
+export const BarebonesLyricsEmbed = (): MessageEmbed => {
   return new MessageEmbed({
     title: `${LoadingEmoji} Loading...`,
-    color: 'FFFF64',
+    color: '#FFFF64',
     footer: { text: `by Lyrics Finder | ${getTips()}` }
   })
 }
@@ -142,5 +164,3 @@ export const embedTooLongField: EmbedField[] = [
     inline: false
   }
 ]
-
-export { AboutLyricsFinderEmbed, BarebonesLyricsEmbed, PrivacyPolicyEmbed, HelpEmbed, InfoEmbed }

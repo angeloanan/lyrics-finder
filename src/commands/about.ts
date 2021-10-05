@@ -1,23 +1,18 @@
-import { Client, Message } from 'discord.js'
+import { CommandInteraction } from 'discord.js'
 
 import { AboutLyricsFinderEmbed } from '../constants/embeds'
-import { LyricsFinderError } from '../types/ErrorCode'
-import logger from '../utils/logger'
+import { Command } from '../lib/struct/Command'
 
-export async function exec (bot: Client, message: Message): Promise<void> {
-  try {
-    if (bot.user == null) return
+export class AboutCommand extends Command {
+  config = {
+    name: 'About',
+    description: 'Sends information regarding Lyrics Finder'
+  }
 
-    await message.channel.send(AboutLyricsFinderEmbed(bot))
-  } catch (e) {
-    const err = e as Error
-
-    void message.channel.send(
-      `Something went wrong! Please recheck the bot's permission\n\`\`\`js\n${
-        err.message ?? err.name ?? 'Unknown Error!'
-      }\`\`\``
-    )
-
-    logger.error(e, LyricsFinderError.COMMAND_ABOUT)
+  async run(interaction: CommandInteraction): Promise<void> {
+    await interaction.reply({
+      embeds: [AboutLyricsFinderEmbed(interaction.client)],
+      ephemeral: true
+    })
   }
 }

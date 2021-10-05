@@ -11,7 +11,7 @@ const presenceData: PresenceData = {
   }
 }
 
-export async function handle (bot: DiscordClient): Promise<void> {
+export async function handle(bot: DiscordClient): Promise<void> {
   if (bot.user === null) return
   bot.logger.info('DiscordJS Ready')
   bot.logger.info(

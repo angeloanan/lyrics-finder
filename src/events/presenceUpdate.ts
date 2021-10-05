@@ -7,12 +7,15 @@ import db from 'quick.db'
 import { getSpotifySong } from '../utils/getSpotifySong'
 
 // Spotify auto lyrics search
-export function deleteUserFromAutoSearchDB (userID: string): void {
+export function deleteUserFromAutoSearchDB(userID: string): void {
   db.delete(`autoSearchList.${userID}`)
   db.delete(`currentSong.${userID}`)
 }
 
-export async function onPresenceUpdate (bot: Client, presence: Presence): Promise<void> {
+export async function onPresenceUpdate(
+  bot: Client,
+  presence: Presence
+): Promise<void> {
   // If user doesn't have presence
   if (presence.user == null) return
   // If user isn't on Database
@@ -21,7 +24,7 @@ export async function onPresenceUpdate (bot: Client, presence: Presence): Promis
   const userID = presence.user.id
 
   // Get database entry to know which channel to respond
-  const dbEntry: AutoSearchDBObject = db.get(`autoSearchList.${userID}`)
+  const dbEntry = db.get(`autoSearchList.${userID}`) as AutoSearchDBObject
   const guildID = dbEntry.guildID
   const channelID = dbEntry.channelID
 

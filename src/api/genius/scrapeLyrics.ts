@@ -13,7 +13,10 @@ import { newError } from '../../utils'
 
 if (process.env.BACKEND_URL == null) throw new Error('Backend URL not supplied')
 
-export async function scrapeLyricsFromURL (url: string, counter = 1): Promise<string> {
+export async function scrapeLyricsFromURL(
+  url: string,
+  counter = 1
+): Promise<string> {
   try {
     const backendUrl = process.env.BACKEND_URL as string
     if (counter >= 5) throw new Error('recursive') // Recursive Counter
@@ -36,7 +39,10 @@ export async function scrapeLyricsFromURL (url: string, counter = 1): Promise<st
     switch (error.message) {
       case 'recursive':
         logger.error({ url }, 'Scrape function reached max depth of recursion')
-        throw newError('recursive', 'Function has reached its max depth of recursion')
+        throw newError(
+          'recursive',
+          'Function has reached its max depth of recursion'
+        )
       default:
         logger.warn({ e }, 'Error fetching lyrics from upstream')
         return await scrapeLyricsFromURL(url, counter + 1)
