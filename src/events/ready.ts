@@ -1,30 +1,18 @@
-import { DiscordClient } from '../types/DiscordClient'
-import { PresenceData } from 'discord.js'
-import { version } from '../../package.json'
+import { Event } from '../lib'
 
-const presenceData: PresenceData = {
-  status: 'online',
-  afk: false,
-  activity: {
-    type: 'WATCHING',
-    name: `for ~!help | ${version}`
+export class ReadyEvent extends Event {
+  name = 'ready'
+
+  async once() {
+    this.client.user?.setPresence({
+      status: 'online',
+      afk: false,
+      activities: [
+        {
+          type: 'WATCHING',
+          name: `for ~!help | ${1}`
+        }
+      ]
+    })
   }
-}
-
-export async function handle(bot: DiscordClient): Promise<void> {
-  if (bot.user === null) return
-  bot.logger.info('DiscordJS Ready')
-  bot.logger.info(
-    { guildCount: bot.guilds.cache.size, user: bot.users.cache.size },
-    'Guild Count Update'
-  )
-
-  // Set presence
-  await bot.user.setPresence(presenceData)
-
-  // Every 10 minutes, update presence
-  setInterval(() => {
-    if (bot.user === null) return
-    void bot.user.setPresence(presenceData)
-  }, 600000)
 }

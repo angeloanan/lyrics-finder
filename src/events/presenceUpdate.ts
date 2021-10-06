@@ -1,10 +1,11 @@
-import type { Client, Presence, TextChannel } from 'discord.js'
+import { Client, Presence, TextChannel, User } from 'discord.js'
 
 import type { AutoSearchDBObject } from '../types/autoSearchDBObject'
 import { BarebonesLyricsEmbed } from '../constants/embeds'
 import { completeSearch } from '../commands/search'
 import db from 'quick.db'
 import { getSpotifySong } from '../utils/getSpotifySong'
+import { Event } from '../lib/struct'
 
 // Spotify auto lyrics search
 export function deleteUserFromAutoSearchDB(userID: string): void {
@@ -12,34 +13,7 @@ export function deleteUserFromAutoSearchDB(userID: string): void {
   db.delete(`currentSong.${userID}`)
 }
 
-export async function onPresenceUpdate(
-  bot: Client,
-  presence: Presence
-): Promise<void> {
-  // If user doesn't have presence
-  if (presence.user == null) return
-  // If user isn't on Database
-  if (!db.has(`autoSearchList.${presence.user.id}`)) return
-
-  const userID = presence.user.id
-
-  // Get database entry to know which channel to respond
-  const dbEntry = db.get(`autoSearchList.${userID}`) as AutoSearchDBObject
-  const guildID = dbEntry.guildID
-  const channelID = dbEntry.channelID
-
-  const guild = bot.guilds.cache.get(guildID)
-
-  // If Guild were deleted, unavailable or the bot was kicked
-  if (typeof guild === 'undefined' || !guild.available) {
-    return deleteUserFromAutoSearchDB(userID)
-  }
-
-  const channel = bot.channels.cache.get(channelID) as TextChannel | undefined
-
-  // If channel were deleted
-  if (typeof channel === 'undefined') return deleteUserFromAutoSearchDB(userID)
-
+export async function onPresenceUpdate(bot: Client, presence: Presence): Promise<void> {
   // Start sending messages etc
   const songQuery = getSpotifySong(presence)
 
@@ -55,5 +29,32 @@ export async function onPresenceUpdate(
     db.set(`currentSong.${userID}`, songQuery)
 
     await completeSearch(songQuery, responseMessage, 'autosearch')
+  }
+}
+
+export class PresenceUpdateEvent extends Event {
+  name = 'presenceUpdate'
+
+  async on(oldPresence: Presence | null, newPresence: Presence) {
+    if (newPresence.user == null) return
+
+    const isAutosearchOn = await this.client.db.autosearch.userAutosearchStatus(newPresence.user)
+    if (!isAutosearchOn) return
+
+    const autosearchDetail = await this.client.db.autosearch.getUserAutosearchDetail(
+      newPresence.user
+    )
+    if (
+      this.client.guilds.resolve(autosearchDetail.guildID) == null ||
+      this.client.channels.resolve(autosearchDetail.channelID) == null
+    ) {
+      this.client.db.autosearch.disableUserAutosearch(newPresence.user)
+      return
+    }
+
+    const songQuery = getSpotifySong(newPresence)
+    if (songQuery == null) {
+      return
+    }
   }
 }

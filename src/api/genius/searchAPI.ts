@@ -32,10 +32,7 @@ export async function searchAPI(query: string): Promise<SearchResult> {
         { query, searchResult },
         `Upstream Error: Genius Meta Status ${searchResult.meta.status}`
       )
-      throw newError(
-        'genius/status',
-        `Genius meta status ${searchResult.meta.status}`
-      )
+      throw newError('genius/status', `Genius meta status ${searchResult.meta.status}`)
     }
 
     return searchResult

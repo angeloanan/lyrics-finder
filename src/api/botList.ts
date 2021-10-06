@@ -28,10 +28,7 @@ async function postTopGG(guildCount: number, botID: string): Promise<void> {
   })
 }
 
-async function postExtremeList(
-  guildCount: number,
-  botID: string
-): Promise<void> {
+async function postExtremeList(guildCount: number, botID: string): Promise<void> {
   if (extremeListToken == null) return
 
   const topggBody = {
@@ -71,10 +68,7 @@ async function postDiscordBotList(
   })
 }
 
-async function postDiscordBotsGG(
-  guildCount: number,
-  botID: string
-): Promise<void> {
+async function postDiscordBotsGG(guildCount: number, botID: string): Promise<void> {
   if (discordBotsGGToken == null) return
 
   const discordBotsGGBody = {
@@ -91,10 +85,7 @@ async function postDiscordBotsGG(
   })
 }
 
-async function postDiscordBoats(
-  guildCount: number,
-  botID: string
-): Promise<void> {
+async function postDiscordBoats(guildCount: number, botID: string): Promise<void> {
   if (discordBoatsToken == null) return
 
   const discordBoatsBody = {
@@ -111,10 +102,7 @@ async function postDiscordBoats(
   })
 }
 
-async function postBotlistSpace(
-  guildCount: number,
-  botID: string
-): Promise<void> {
+async function postBotlistSpace(guildCount: number, botID: string): Promise<void> {
   if (discordBotlistSpaceToken == null) return
 
   const discordBotlistSpaceBody = {
@@ -131,10 +119,7 @@ async function postBotlistSpace(
   })
 }
 
-export async function update(
-  guildCount: number,
-  bot: DiscordClient
-): Promise<void> {
+export async function update(guildCount: number, bot: DiscordClient): Promise<void> {
   const botID = bot.user?.id
   const userCount = bot.users.cache.size
 
@@ -159,8 +144,5 @@ export async function update(
     }
   })
 
-  bot.logger.info(
-    { guildCount, userCount, success: allSucess },
-    'Guild count update'
-  )
+  bot.logger.info({ guildCount, userCount, success: allSucess }, 'Guild count update')
 }

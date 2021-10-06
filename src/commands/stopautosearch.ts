@@ -4,8 +4,7 @@ import type { AutoSearchDBObject } from '../types/autoSearchDBObject'
 import { Command } from '../lib/struct/Command'
 import db from 'quick.db'
 
-const userIDRegex = /(\d{17,19})/
-
+// TODO: Migrate to memorydb
 export class AdminCommands extends Command {
   config = {
     name: 'admin',
@@ -47,10 +46,7 @@ export class AdminCommands extends Command {
 
     switch (subcommand) {
       case 'stopautosearch': {
-        const targetUser = interaction.options.getUser(
-          'stopAutosearchUser',
-          true
-        )
+        const targetUser = interaction.options.getUser('stopAutosearchUser', true)
         const targetUserId = targetUser.id
         const guildId = interaction.guildId
         const dbKey = `autoSearchList.${targetUserId}`
@@ -64,9 +60,7 @@ export class AdminCommands extends Command {
             )
           }
         } else {
-          return await interaction.reply(
-            '❌ That user is not using autosearch in this server'
-          )
+          return await interaction.reply('❌ That user is not using autosearch in this server')
         }
       }
 

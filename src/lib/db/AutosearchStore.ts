@@ -6,9 +6,6 @@ export type AutosearchStoreValue = {
   channelID: string
 }
 
-// TODO: Complete this
-// TODO: Sanity check this
-// TODO: Generate a common database interface
 export class AutosearchStore {
   private db: Map<AutosearchStoreKey, AutosearchStoreValue>
 
@@ -25,20 +22,32 @@ export class AutosearchStore {
     return this.db.has(user.id)
   }
 
-  async toggleUserAutosearch(user: User, details: AutosearchStoreValue) {
-    if (await this.userAutosearchStatus(user)) {
-      // TODO: Finish this monkaS
-    }
-  }
-
-  async enableUserAutosearch(
-    user: User,
-    details: AutosearchStoreValue
-  ): Promise<void> {
+  async enableUserAutosearch(user: User, details: AutosearchStoreValue): Promise<void> {
     this.db.set(user.id, details)
   }
 
-  async stopUserAutosearch(user: User): Promise<void> {
+  async disableUserAutosearch(user: User): Promise<void> {
     this.db.delete(user.id)
+  }
+
+  async getUserAutosearchDetail(user: User): Promise<AutosearchStoreValue> {
+    const data = this.db.get(user.id)
+    if (data == null) {
+      throw new Error('User does not have their autosearch on')
+    } else {
+      return data
+    }
+  }
+
+  async toggleUserAutosearch(user: User, details: AutosearchStoreValue) {
+    if (await this.userAutosearchStatus(user)) {
+      this.disableUserAutosearch(user)
+    } else {
+      this.enableUserAutosearch(user, details)
+    }
+  }
+
+  async autosearchTotal(): Promise<number> {
+    return this.db.size
   }
 }

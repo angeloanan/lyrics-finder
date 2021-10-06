@@ -1,9 +1,10 @@
-import { Client, CommandInteraction, DMChannel, Message } from 'discord.js'
+import { CommandInteraction } from 'discord.js'
+import { Command } from '../lib'
 
 import { AutoSearchDBObject } from '../types/autoSearchDBObject'
 import db from 'quick.db'
-import { Command } from '../lib/struct/Command'
 
+// TODO: Rewrite using MapDB
 export class AutoSearchCommand extends Command {
   config = {
     name: 'autosearch',
@@ -12,8 +13,7 @@ export class AutoSearchCommand extends Command {
       {
         type: 5,
         name: 'Switch',
-        description:
-          'Whether autosearch should be enabled or disabled (default toggles)',
+        description: 'Whether autosearch should be enabled or disabled (default toggles)',
         choices: [
           {
             name: 'On',
@@ -51,14 +51,10 @@ export class AutoSearchCommand extends Command {
     if (wantedState === null) {
       if (userOnDb) {
         db.delete(dbKey)
-        return await interaction.reply(
-          '❌ You have disabled Spotify auto lyrics search'
-        )
+        return await interaction.reply('❌ You have disabled Spotify auto lyrics search')
       } else {
         db.set(dbKey, dbVal)
-        return await interaction.reply(
-          '✅ You have turned on Spotify auto lyrics search'
-        )
+        return await interaction.reply('✅ You have turned on Spotify auto lyrics search')
       }
     }
 
@@ -67,22 +63,16 @@ export class AutoSearchCommand extends Command {
         return await interaction.reply('You already have autosearch turned on!')
       } else {
         db.set(dbKey, dbVal)
-        return await interaction.reply(
-          '✅ You have turned on Spotify auto lyrics search'
-        )
+        return await interaction.reply('✅ You have turned on Spotify auto lyrics search')
       }
     }
 
     if (wantedState === false) {
       db.delete(dbKey)
       if (userOnDb) {
-        return await interaction.reply(
-          '❌ You have disabled Spotify auto lyrics search'
-        )
+        return await interaction.reply('❌ You have disabled Spotify auto lyrics search')
       } else {
-        return await interaction.reply(
-          'You already have autosearch turned off!'
-        )
+        return await interaction.reply('You already have autosearch turned off!')
       }
     }
   }

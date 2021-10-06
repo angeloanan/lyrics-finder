@@ -89,17 +89,12 @@ export async function completeSearch(
     })
 }
 
-export async function search(
-  _bot: DiscordClient,
-  message: Message
-): Promise<void> {
+export async function search(_bot: DiscordClient, message: Message): Promise<void> {
   const msg = message.content.substring(1) // FIXME: Don't hardcode prefix length
   const searchTerm = msg.split(' ').splice(1).join(' ')
 
   if (searchTerm === '') {
-    return void (await message.channel.send(
-      'You did not enter any search term!'
-    ))
+    return void (await message.channel.send('You did not enter any search term!'))
   }
   if (searchTerm.includes('.com')) {
     return void (await message.channel.send('Searches may not include URL'))
@@ -112,19 +107,13 @@ export async function search(
   }
 
   if (message.mentions.everyone) {
-    return void (await message.channel.send(
-      'Searches may not include mentions'
-    ))
+    return void (await message.channel.send('Searches may not include mentions'))
   }
   if (message.mentions.users.size > 0) {
-    return void (await message.channel.send(
-      'Searches may not include mentions'
-    ))
+    return void (await message.channel.send('Searches may not include mentions'))
   }
   if (message.mentions.channels.size > 0) {
-    return void (await message.channel.send(
-      'Searches may not include mentions'
-    ))
+    return void (await message.channel.send('Searches may not include mentions'))
   }
 
   const responseMessage = message.channel.send(BarebonesLyricsEmbed())

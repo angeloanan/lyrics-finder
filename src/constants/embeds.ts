@@ -67,13 +67,7 @@ export const HelpEmbed = (bot: Client): MessageEmbed => {
       },
       {
         name: '💬 • Bot Info (**5**)',
-        value: wrapInCodeblocks([
-          'help',
-          'ping',
-          'invite',
-          'stats',
-          'privacypolicy'
-        ]),
+        value: wrapInCodeblocks(['help', 'ping', 'invite', 'stats', 'privacypolicy']),
         inline: true
       },
       {
@@ -115,9 +109,7 @@ export const InfoEmbed = (bot: Client): MessageEmbed => {
       {
         name: 'Live Statistics',
         value: `
-      Serving ${bot.users.cache.size - 1} users in ${
-          bot.guilds.cache.size
-        } guilds
+      Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds
       Has been online for ${uptime}
       Using ${Math.round(process.memoryUsage().rss / 1000 / 1000)}MB of memory
       Average ping is around ${Math.round(bot.ws.ping)}ms

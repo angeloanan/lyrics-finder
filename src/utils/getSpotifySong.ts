@@ -9,7 +9,7 @@ export function getSpotifySong(userPresence: Presence | null): string | null {
   if (userPresence == null) return null
   const presences = userPresence.activities
 
-  presences.forEach(presence => {
+  for (const presence of presences) {
     if (presence.name === 'Spotify' && presence.applicationId === null) {
       // Spotify - Presence#state = Artists, seperated by `;`
       // Spotify - Presence#details = Song Title
@@ -24,7 +24,7 @@ export function getSpotifySong(userPresence: Presence | null): string | null {
       const cleanSongTitle = songTitleCleanDash
       return `${cleanSongTitle} ${songPrimaryArtist}`
     }
-  })
+  }
 
   return null
 }

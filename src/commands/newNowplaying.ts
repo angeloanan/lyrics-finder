@@ -1,7 +1,6 @@
-import { APIGuildMember } from 'discord-api-types'
 import { CommandInteraction, GuildMember } from 'discord.js'
 import { BarebonesLyricsEmbed } from '../constants/embeds'
-import { Command } from '../lib/struct/Command'
+import { Command } from '../lib'
 import { getSpotifySong } from '../utils/getSpotifySong'
 
 export class SearchCommand extends Command {
@@ -12,8 +11,7 @@ export class SearchCommand extends Command {
       {
         type: 5,
         name: 'SelfDisplay',
-        description:
-          'Whether lyrics should be displayed only to you (default: `true`)',
+        description: 'Whether lyrics should be displayed only to you (default: `true`)',
         choices: [
           {
             name: 'Yes',
@@ -35,8 +33,7 @@ export class SearchCommand extends Command {
 
     const guildMember = interaction.member as GuildMember
     const searchQuery = getSpotifySong(guildMember.presence)
-    const ephemeral =
-      interaction.options.getBoolean('SelfDisplay', false) ?? true
+    const ephemeral = interaction.options.getBoolean('SelfDisplay', false) ?? true
 
     if (searchQuery == null) {
       // TODO: Improve message

@@ -4,10 +4,7 @@ import { BarebonesLyricsEmbed } from '../constants/embeds'
 import { completeSearch } from './search'
 import { getSpotifySong } from '../utils/getSpotifySong'
 
-export async function nowPlaying(
-  _bot: Client,
-  message: Message
-): Promise<void> {
+export async function nowPlaying(_bot: Client, message: Message): Promise<void> {
   const responseMessage = message.channel.send(BarebonesLyricsEmbed())
   const messageAuthor = await message.author.fetch(true)
 

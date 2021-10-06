@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js'
 
 import { AboutLyricsFinderEmbed } from '../constants/embeds'
-import { Command } from '../lib/struct/Command'
+import { Command } from '../lib'
 
 export class AboutCommand extends Command {
   config = {

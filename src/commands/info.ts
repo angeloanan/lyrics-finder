@@ -1,7 +1,7 @@
 import type { CommandInteraction } from 'discord.js'
 
 import { InfoEmbed } from '../constants/embeds'
-import { Command } from '../lib/struct/Command'
+import { Command } from '../lib'
 
 export class InfoCommand extends Command {
   config = {

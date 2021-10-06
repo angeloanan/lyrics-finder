@@ -1,7 +1,7 @@
+import { Command } from '../lib'
 import { CommandInteraction } from 'discord.js'
 
 import { HelpEmbed } from '../constants/embeds'
-import { Command } from '../lib/struct/Command'
 
 // TODO: Better help interaction
 

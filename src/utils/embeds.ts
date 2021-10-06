@@ -1,10 +1,4 @@
-import {
-  EmbedField,
-  Message,
-  MessageEmbed,
-  SplitOptions,
-  Util
-} from 'discord.js'
+import { EmbedField, Message, MessageEmbed, SplitOptions, Util } from 'discord.js'
 
 import { BarebonesLyricsEmbed } from '../constants/embeds'
 import { LoadingEmoji } from '../constants/emojis'
@@ -24,10 +18,7 @@ const splitOptions: SplitOptions = {
  * @param message Barebone Preload Embed
  * @param song Genius Song Result
  */
-export const fillBarebonesEmbed = async (
-  message: Message,
-  song: Result
-): Promise<void> => {
+export const fillBarebonesEmbed = async (message: Message, song: Result): Promise<void> => {
   // Create a copy of Embed Barebones and fill in the blanks
   const preloadedSongEmbed = new MessageEmbed(BarebonesLyricsEmbed())
   preloadedSongEmbed
@@ -51,9 +42,7 @@ export const createEmbedField = (name?: string, value?: string): EmbedField => {
   }
 }
 
-export async function makeLyricsEmbedField(
-  lyrics: string
-): Promise<EmbedField[]> {
+export async function makeLyricsEmbedField(lyrics: string): Promise<EmbedField[]> {
   // Regex will match if lyrics is following Genius' standard
   const matches = execall(lyricsRegex, lyrics)
 
@@ -72,9 +61,7 @@ export async function makeLyricsEmbedField(
     })
   } else {
     return splitMessage(lyrics, splitOptions).map((lyric, index) => {
-      return index === 0
-        ? createEmbedField('[Lyrics]', lyric)
-        : createEmbedField('\u200B', lyric)
+      return index === 0 ? createEmbedField('[Lyrics]', lyric) : createEmbedField('\u200B', lyric)
     })
   }
 }

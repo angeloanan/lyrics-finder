@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js'
-import { Command } from '../lib/struct/Command'
+import { Command } from '../lib'
 
 export class PingCommand extends Command {
   config = {
@@ -10,9 +10,7 @@ export class PingCommand extends Command {
   async run(interaction: CommandInteraction) {
     const oldDate = new Date().getTime()
     await interaction.reply({
-      content: `Pong! (\`${
-        oldDate - interaction.createdTimestamp
-      }ms\` invocation)`,
+      content: `Pong! (\`${oldDate - interaction.createdTimestamp}ms\` invocation)`,
       ephemeral: true
     })
 

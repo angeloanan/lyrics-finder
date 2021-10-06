@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js'
 import { customEmotesRegex, twemojiRegex } from '../../config'
 import { BarebonesLyricsEmbed } from '../constants/embeds'
-import { Command } from '../lib/struct/Command'
+import { Command } from '../lib'
 
 export class SearchCommand extends Command {
   config = {
@@ -18,8 +18,7 @@ export class SearchCommand extends Command {
       {
         type: 5,
         name: 'SelfDisplay',
-        description:
-          'Whether lyrics should be displayed only to you (default: `false`)',
+        description: 'Whether lyrics should be displayed only to you (default: `false`)',
         choices: [
           {
             name: 'Yes',
@@ -36,8 +35,7 @@ export class SearchCommand extends Command {
 
   async run(interaction: CommandInteraction) {
     const searchQuery = interaction.options.getString('Query', true)
-    const ephemeral =
-      interaction.options.getBoolean('SelfDisplay', false) ?? false
+    const ephemeral = interaction.options.getBoolean('SelfDisplay', false) ?? false
 
     // Guards
     if (searchQuery.includes('.com')) {
