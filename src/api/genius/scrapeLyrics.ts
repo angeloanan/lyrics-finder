@@ -1,11 +1,10 @@
-// Goal: Genius URL => Lyrics
-// Things that can go wrong: Lyrics is empty
-
 import 'dotenv/config'
 
 import fetch from 'node-fetch'
-import logger from '../../utils/logger'
-import { newError } from '../../utils'
+import pRetry from 'p-retry'
+
+// Goal: Genius URL => Lyrics
+// Things that can go wrong: Lyrics is empty
 
 // Genius scraping is very unreliable
 // Sometimes, Genius doesn't display the selected tag
@@ -13,33 +12,30 @@ import { newError } from '../../utils'
 
 if (process.env.BACKEND_URL == null) throw new Error('Backend URL not supplied')
 
-export async function scrapeLyricsFromURL(url: string, counter = 1): Promise<string> {
-  try {
-    const backendUrl = process.env.BACKEND_URL as string
-    if (counter >= 5) throw new Error('recursive') // Recursive Counter
+interface ScrapeSuccessResponse {
+  lyrics: string
+}
 
-    const fetchRequest = await fetch(backendUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ url: url })
-    })
+export function scrapeLyricsFromURL(url: string): Promise<string> {
+  return pRetry(
+    async () => {
+      const backendUrl = process.env.BACKEND_URL as string
 
-    if (!fetchRequest.ok) throw new Error('upstream')
-    const fetchData = await fetchRequest.json()
+      const fetchRequest = await fetch(backendUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ url: url })
+      })
 
-    return fetchData.lyrics
-  } catch (e) {
-    const error = e as Error
+      if (!fetchRequest.ok) throw 'Upstream not ok'
+      const fetchData = (await fetchRequest.json()) as ScrapeSuccessResponse
 
-    switch (error.message) {
-      case 'recursive':
-        logger.error({ url }, 'Scrape function reached max depth of recursion')
-        throw newError('recursive', 'Function has reached its max depth of recursion')
-      default:
-        logger.warn({ e }, 'Error fetching lyrics from upstream')
-        return await scrapeLyricsFromURL(url, counter + 1)
+      return fetchData.lyrics
+    },
+    {
+      retries: 5
     }
-  }
+  )
 }

@@ -1,4 +1,4 @@
-const Tips: string[] = [
+const tips: string[] = [
   'Support server: https://discord.gg/mhUdNPZ', // Invite link for Footer https://discord.gg/mhUdNPZ
   'Use `~!np` to display your current Spotify song',
   'Lyrics not found? Add it to https://genius.com',
@@ -7,4 +7,4 @@ const Tips: string[] = [
   'Changelog - https://lyrics-finder.angeloanan.xyz/changelog'
 ]
 
-export default Tips
+export default tips

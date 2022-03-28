@@ -1,88 +1,92 @@
 import { Client as DJSClient, ClientOptions, Collection } from 'discord.js'
-import { join } from 'node:path'
 import { readdir } from 'node:fs/promises'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+import { Database } from '../db/index.js'
 import { Command, Event } from '.'
 
-export type CustomClientOption = ClientOptions & {
-  cmdDir?: string
-  evtDir?: string
-}
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
+/**
+ * Custom Object-Oriented Discord.js Client
+ *
+ * Original credit to Ben#0002 (MIT License, I've modified this)
+ * @see https://github.com/Benricheson101/anti-phishing-bot/blob/main/lib/struct/client.ts
+ */
 export class CustomClient extends DJSClient {
-  cmds = new Collection<string, Command>()
+  private eventsPath = join(__dirname, '../../events')
+  private commandsPath = join(__dirname, '../../commands')
 
-  #eventDir: string
-  #commandDir: string
+  commands = new Collection<string, Command>()
+  db!: Database
 
   constructor(
-    options: CustomClientOption = {
-      cmdDir: join(__dirname, '../../src/cmds'),
-      evtDir: join(__dirname, '../../events/cmds'),
-      intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_PRESENCES']
+    options: ClientOptions = {
+      shards: 'auto',
+      presence: {
+        status: 'idle',
+        activities: [{ name: 'Restarting...', type: 'PLAYING' }]
+      },
+      intents: ['GUILD_PRESENCES']
     }
   ) {
     super(options)
+  }
 
-    this.#commandDir = options.cmdDir || join(__dirname, '../../src/cmds')
-    this.#eventDir = options.evtDir || join(__dirname, '../../events/cmds')
+  async init(): Promise<this> {
+    await Promise.all([this.loadCommands(), this.loadEvents()])
+
+    this.db = new Database()
+
+    return this
   }
 
   async loadCommands() {
-    const cmds = (await this.readdir(this.#commandDir, Command).then(cmds =>
-      cmds.map(c => new c(this))
-    )) as Command[]
+    const commandsClass = await this.readDirectory(this.commandsPath)
+    const commands = commandsClass.map(command => {
+      return new command(this)
+    }) as Command[]
 
-    for (const cmd of cmds) {
-      this.cmds.set(cmd.config.name, cmd)
+    for (const command of commands) {
+      console.debug('Setting command', command.config.name)
+      this.commands.set(command.config.name, command)
     }
+
+    console.debug(`Done loading commands! (${commands.length} loaded)`)
   }
 
   async loadEvents() {
-    const events = (await this.readdir(this.#eventDir, Event).then(evts =>
-      evts.map(evt => new evt(this))
+    const events = (await this.readDirectory(this.eventsPath).then(events =>
+      events.map(event => new event(this))
     )) as Event[]
 
+    // TODO: Optimize using Class Object property
     for (const event of events) {
-      if (typeof event.once === 'function') {
-        this.once(event.name, (...args) => event.once!(...args))
+      console.debug(`Loading event ${event.name}`)
+      if (event.once != null) {
+        this.once(event.name, (...args) => event.once?.(...args))
       }
 
-      if (typeof event.on === 'function') {
-        this.on(event.name, (...args) => event.on!(...args))
+      if (event.on != null) {
+        this.on(event.name, (...args) => event.on?.(...args))
       }
     }
+    console.debug(`Done loading events! (${events.length} loaded)`)
   }
 
-  private async readdir<T extends new (...args: unknown[]) => T>(
-    dir: string,
-    kind: unknown
+  private async readDirectory<T extends new (...args: unknown[]) => T>(
+    dir: string
+    // kind: unknown
   ): Promise<T[]> {
     const files = await readdir(dir)
-    const filesFullPath = (await Promise.all(
-      files.filter(f => f.endsWith('.ts')).map(async f => import(join(dir, f)))
-    )) as { [key: string]: T }[]
-    return Promise.all(
-      filesFullPath
-        .map(Object.values)
-        .flat()
-        .filter(o => Object.getPrototypeOf(o) === kind)
-    )
 
-    // TODO: Sanity check if function functions equally
-    // return readdir(dir)
-    //   .then(files =>
-    //     files
-    //       .filter(f =>
-    //         __filename.endsWith('.ts') ? f.endsWith('.ts') : f.endsWith('.js')
-    //       )
-    //       .map(f => import(join(dir, f)))
-    //   )
-    //   .then(Promise.all.bind(Promise))
-    //   .then(imports =>
-    //     (imports as { [key: string]: T }[])
-    //       .map(Object.values)
-    //       .flat()
-    //       .filter(o => Object.getPrototypeOf(o) === kind)
-    //   )
+    const loadedFiles = await Promise.all(files.map(async f => import(join(dir, f))))
+
+    return Promise.all(
+      loadedFiles.map(Object.values).flat()
+      // .filter(o => Object.getPrototypeOf(o) === kind)
+      // Don't need this for now
+    )
   }
 }

@@ -1,10 +1,11 @@
 import 'dotenv/config'
 
-import { geniusAPIBaseURL as APIBaseURL } from '../../../config'
-import { SearchResult } from '../../types/GeniusAPI'
 import fetch from 'node-fetch'
-import logger from '../../utils/logger'
+
+import { geniusAPIBaseURL as APIBaseURL } from '../../config'
+import { SearchResult } from '../../types/GeniusAPI'
 import { newError } from '../../utils'
+import logger from '../../utils/logger'
 
 /**
  * Searches Genius for lyrics
@@ -13,7 +14,7 @@ import { newError } from '../../utils'
  * @throws {genius/token} Genius token is not provided
  * @throws {genius/status} Genius meta is not 200
  */
-export async function searchAPI(query: string): Promise<SearchResult> {
+export async function apiSearch(query: string): Promise<SearchResult> {
   try {
     if (process.env.GENIUS_TOKEN == null)
       throw newError('genius/token', 'Genius token not provided')

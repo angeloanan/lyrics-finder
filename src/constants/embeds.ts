@@ -1,9 +1,10 @@
+import { stripIndent } from 'common-tags'
 import type { Client, EmbedField } from 'discord.js'
-import { getTips, wrapInCodeblocks } from '../utils'
-
-import { LoadingEmoji } from './emojis'
 import { MessageEmbed } from 'discord.js'
 import prettyms from 'pretty-ms'
+
+import { getTips, wrapInCodeblocks } from '../utils'
+import { LoadingEmoji } from './emojis'
 
 export const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
   return new MessageEmbed({
@@ -19,8 +20,11 @@ export const AboutLyricsFinderEmbed = (bot: Client): MessageEmbed => {
     fields: [
       {
         name: '**Useful links**',
-        value:
-          '`-` [Invite Lyrics Finder](https://discord.com/oauth2/authorize?client_id=559265456008200222&permissions=314432&scope=bot)\n`-` [Support Server](https://discord.gg/mFvDvHc)\n`-` [Lyrics Finder Website / Docs](https://lyrics-finder.angeloanan.xyz)'
+        value: stripIndent`
+          \` - \` [Invite Lyrics Finder](https://discord.com/oauth2/authorize?client_id=559265456008200222&permissions=314432&scope=bot)
+          \` - \` [Support Server](https://discord.gg/mFvDvHc)
+          \` - \` [Lyrics Finder Website / Docs](https://lyrics-finder.angeloanan.xyz)'
+        `
       }
     ],
 
@@ -32,7 +36,7 @@ export const PrivacyPolicyEmbed = (): MessageEmbed => {
   return new MessageEmbed({
     title: 'Lyrics Finder Privacy Policy',
     description:
-      "Discord obliges every bots to have a [Privacy Policy](https://github.com/discord/discord-api-docs/blob/2c8f55422e5a53196eabf7db51957c3426fafe01/docs/Legal.md#a-implement-good-privacy-practices) as of August 15, 2020. Here is the [Lyrics Finder's Privacy Policy](https://lyrics-finder.angeloanan.xyz/privacy-policy).",
+      "Discord obliges every bots to have a [Privacy Policy](https://github.com/discord/discord-api-docs/blob/master/docs/Legal.md#section-2-user-privacy-and-security) as of August 15, 2020. Here is the [Lyrics Finder's Privacy Policy](https://lyrics-finder.angeloanan.xyz/privacy-policy).",
 
     fields: [
       {
@@ -99,39 +103,39 @@ export const InfoEmbed = (bot: Client): MessageEmbed => {
     fields: [
       {
         name: 'Bot Information',
-        value: `
-      **Node Version**: ${process.version}
-      **Framework**: DiscordJS 12
-      **Developer**: <@189769721653100546>
-      `.trim(),
+        value: stripIndent`
+          **Node Version**: ${process.version}
+          **Framework**: DiscordJS 12
+          **Developer**: <@189769721653100546>
+        `,
         inline: true
       },
       {
         name: 'Live Statistics',
-        value: `
-      Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds
-      Has been online for ${uptime}
-      Using ${Math.round(process.memoryUsage().rss / 1000 / 1000)}MB of memory
-      Average ping is around ${Math.round(bot.ws.ping)}ms
-      `.trim(),
+        value: stripIndent`
+          Serving ${bot.users.cache.size - 1} users in ${bot.guilds.cache.size} guilds
+          Has been online for ${uptime}
+          Using ${Math.round(process.memoryUsage().rss / 1000 / 1000)}MB of memory
+          Average ping is around ${Math.round(bot.ws.ping)}ms
+        `,
         inline: true
       },
       {
         name: 'Links and URLs',
-        value: `
-      **Bot's Website **: https://lyrics-finder.angeloanan.xyz
-      **Support the bot**: https://lyrics-finder.angeloanan.xyz/support
-      `.trim(),
+        value: stripIndent`
+          **Bot's Website **: https://lyrics-finder.angeloanan.xyz
+          **Support the bot**: https://lyrics-finder.angeloanan.xyz/support
+        `,
         inline: false
       },
       {
         name: 'Disclaimers',
-        value: `
-      **Data Collection**
-      I don't store anything except for search terms.
-      These terms are anonymous; I can't tell what's whos.
-      These are stored for ~30 days for bugfixing.
-      `.trim(),
+        value: stripIndent`
+          **Data Collection**
+          I don't store anything except for search terms.
+          These terms are anonymous; I can't tell what's whos.
+          These are stored for ~30 days for bugfixing.
+        `,
         inline: false
       }
     ],

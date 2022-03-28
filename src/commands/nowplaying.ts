@@ -1,29 +1,26 @@
-import { Client, Message } from 'discord.js'
+import { CacheType, CommandInteraction } from 'discord.js'
+import { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v9'
 
-import { BarebonesLyricsEmbed } from '../constants/embeds'
-import { completeSearch } from './search'
-import { getSpotifySong } from '../utils/getSpotifySong'
+import { Command, CustomClient } from '../lib/index.js'
 
-export async function nowPlaying(_bot: Client, message: Message): Promise<void> {
-  const responseMessage = message.channel.send(BarebonesLyricsEmbed())
-  const messageAuthor = await message.author.fetch(true)
+export class NowPlayingCommand extends Command {
+  config: RESTPostAPIApplicationCommandsJSONBody
 
-  responseMessage.catch(err => {
-    void message.channel.send(
-      `I am not able to send embeds here!\nPlease recheck the permission of the bot!\`${JSON.stringify(
-        err
-      )}\``
-    )
-  })
+  constructor(protected client: CustomClient) {
+    super(client)
 
-  const searchTerm = getSpotifySong(messageAuthor.presence)
+    this.config = {
+      name: 'nowplaying',
+      description: "Shows the lyrics to the music you're currently listening on Spotify!",
+      options: []
+    }
+  }
 
-  if (typeof searchTerm === 'string') {
-    await completeSearch(searchTerm, responseMessage, 'nowplaying')
-  } else {
-    void (await responseMessage).edit(
-      "You are not listening to any Spotify song or you didn't display them to your profile!",
-      { embed: null }
-    )
+  async run(interaction: CommandInteraction<CacheType>): Promise<void> {
+    await interaction.deferReply({ ephemeral: true })
+
+    // TODO: Complete
+    await interaction.editReply({})
+    return
   }
 }

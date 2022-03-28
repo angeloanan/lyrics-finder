@@ -1,4 +1,4 @@
-import Tips from '../constants/tips'
+import tips from '../constants/tips'
 
 export function newError(name: string, message: string): Error {
   const err = new Error(message)
@@ -22,10 +22,10 @@ function getRandomInt(min: number, max: number): number {
  * Gets a random Bot tips
  */
 export const getTips = (): string => {
-  const max = Tips.length - 1 // Zero based index
+  const max = tips.length - 1 // Zero based index
 
   const randomIndex = getRandomInt(0, max)
-  return Tips[randomIndex]
+  return tips[randomIndex]
 }
 
 /**

@@ -1,10 +1,10 @@
 import { EmbedField, Message, MessageEmbed, SplitOptions, Util } from 'discord.js'
+import execall from 'execall'
 
+import { LyricsRegex as lyricsRegex } from '../config'
 import { BarebonesLyricsEmbed } from '../constants/embeds'
 import { LoadingEmoji } from '../constants/emojis'
 import type { Result } from '../types/GeniusAPI'
-import execall from 'execall'
-import { regex as lyricsRegex } from '../../config'
 import { safeTrim } from './safeTrim'
 
 const splitMessage = Util.splitMessage
@@ -28,16 +28,16 @@ export const fillBarebonesEmbed = async (message: Message, song: Result): Promis
     .setThumbnail(song.song_art_image_url ?? 'https://genius.com')
     .addField(LoadingEmoji + ' Lyrics Loading...', '\u200B')
 
-  await message.edit(preloadedSongEmbed)
+  await message.edit({ embeds: [preloadedSongEmbed] })
 }
 
 /**
  * Helper function to create Embed Field
  */
-export const createEmbedField = (name?: string, value?: string): EmbedField => {
+export const createEmbedField = (name: string | null, value: string | null): EmbedField => {
   return {
-    name: name ?? '\u200B',
-    value: value ?? '\u200B',
+    name: !name ? '\u200B' : name,
+    value: !value ? '\u200B' : value,
     inline: false
   }
 }

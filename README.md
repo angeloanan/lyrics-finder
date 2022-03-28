@@ -7,11 +7,11 @@
 
 <div align="center">
 
-  ![Status](https://img.shields.io/badge/status-active-success.svg)
-  [![Discord Invite Link](https://img.shields.io/badge/Support%20Server-Invite%20Link-blue?logo=discord)](https://discord.gg/mFvDvHc)
-  [![GitHub Issues](https://img.shields.io/github/issues/angeloanan/lyrics-finder.svg)](https://github.com/angeloanan/lyrics-finder/issues)
-  [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/angeloanan/lyrics-finder.svg)](https://github.com/angeloanan/lyrics-finder/pulls)
-  [![License](https://img.shields.io/github/license/angeloanan/lyrics-finder)](/LICENSE)
+![Status](https://img.shields.io/badge/status-active-success.svg)
+[![Discord Invite Link](https://img.shields.io/badge/Support%20Server-Invite%20Link-blue?logo=discord)](https://discord.gg/mFvDvHc)
+[![GitHub Issues](https://img.shields.io/github/issues/angeloanan/lyrics-finder.svg)](https://github.com/angeloanan/lyrics-finder/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/angeloanan/lyrics-finder.svg)](https://github.com/angeloanan/lyrics-finder/pulls)
+[![License](https://img.shields.io/github/license/angeloanan/lyrics-finder)](/LICENSE)
 
 </div>
 
@@ -22,23 +22,26 @@
 </p>
 
 ## 📝 Table of Contents
-+ [About](#about)
-+ [Demo / Working](#demo)
-+ [How it works](#working)
-+ [Usage](#usage)
-+ [Getting Started](#getting_started)
-+ [Built Using](#built_using)
-+ [TODO](../TODO.md)
-+ [Contributing](../CONTRIBUTING.md)
-+ [Authors](#authors)
-+ [Acknowledgments](#acknowledgement)
+
+- [About](#about)
+- [Demo / Working](#demo)
+- [How it works](#working)
+- [Usage](#usage)
+- [Getting Started](#getting_started)
+- [Built Using](#built_using)
+- [TODO](../TODO.md)
+- [Contributing](../CONTRIBUTING.md)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
+
 Lyrics Finder is a Discord bot which searches for Lyrics on Genius. It supports all song language, as long as it's listed on Genius. If you don't know the song title, you can search the song by using its lyrics.
 
 If you display your current Spotify song as your Discord status, it can automatically search the song by using a command. Feeling like singing to your song? There's also a mode to search every song you're playing on Spotify.
 
 ## 🎥 Demo / Working <a name = "demo"></a>
+
 ![Simple Search](https://img.angeloanan.xyz/XbWljK4B)
 ![Search using lyrics](https://img.angeloanan.xyz/PRLY7NeJ)
 ![Multilingual Support Demo](https://img.angeloanan.xyz/5baOdwRd)
@@ -59,11 +62,13 @@ The entire bot is written using [Typescript](https://typescriptlang.org) with [D
 To use the bot, you will need to [**add the bot by clicking this link**](https://discord.com/oauth2/authorize?client_id=559265456008200222&permissions=314432&scope=bot).
 
 Once done, you can display the help command by sending:
+
 ```
 ~!help
 ```
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
+
 These instructions will get you a copy of the bot up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
@@ -127,14 +132,17 @@ $ yarn start
 ```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
-+ [Discord.js](https://discord.js.org) - Discord API wrapper
-+ [Genius](https://genius.com/developer) - Provides lyrics and API
-+ [Typescript](https://typescriptlang.org) - A typed superset of JavaScript
+
+- [Discord.js](https://discord.js.org) - Discord API wrapper
+- [Genius](https://genius.com/developer) - Provides lyrics and API
+- [Typescript](https://typescriptlang.org) - A typed superset of JavaScript
 
 ## ✍️ Authors <a name = "authors"></a>
-+ [@angeloanan](https://github.com/angeloanan) - Idea & Initial work
+
+- [@angeloanan](https://github.com/angeloanan) - Idea & Initial work
 
 See also the list of [contributors](https://github.com/angeloanan/lyrics-finder/contributors) who participated in this project.
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-+ Beta testing by Sam
+
+- Beta testing by Sam
