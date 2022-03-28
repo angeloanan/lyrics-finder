@@ -4,11 +4,8 @@
  * @param replacer Replaced text when undefined
  */
 export function safeTrim(text: unknown, replacer: string): string {
-  // Check if undefined or null
-  if (typeof text === 'undefined') {
-    return replacer
-  }
-  if (text === null) {
+  // Check if undefined, null or empty string
+  if (!text) {
     return replacer
   }
 
@@ -17,5 +14,6 @@ export function safeTrim(text: unknown, replacer: string): string {
   if (trimmedText === '') {
     return replacer
   }
+
   return trimmedText
 }

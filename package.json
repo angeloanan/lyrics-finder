@@ -49,7 +49,7 @@
     "zlib-sync": "^0.1.7"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "build": "tsc",
     "start": "node ./target/index.js",
     "clean": "rm -r node_modules && rm -r target",
