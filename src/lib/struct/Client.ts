@@ -1,4 +1,6 @@
+import { REST } from '@discordjs/rest'
 import { Client as DJSClient, ClientOptions, Collection } from 'discord.js'
+import { Routes } from 'discord-api-types/v10'
 import { readdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -38,6 +40,28 @@ export class CustomClient extends DJSClient {
     await Promise.all([this.loadCommands(), this.loadEvents()])
 
     this.db = new Database()
+
+    return this
+  }
+
+  async updateCommands(): Promise<this> {
+    console.debug('Refreshing all application (/) commands...')
+    const restClient = new REST({ version: '10' }).setToken(this.token as string)
+
+    await Promise.all(
+      this.commands.map(async c => {
+        console.debug('Refreshing command', c.config.name)
+
+        const commandConfig = c.config
+        await restClient.put(Routes.applicationCommands(this.application?.id as string), {
+          body: commandConfig
+        })
+
+        console.debug('Done refreshing command', c.config.name)
+      })
+    )
+
+    console.debug('Successfully refreshed all application (/) commands.')
 
     return this
   }

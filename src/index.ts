@@ -3,7 +3,14 @@ import 'dotenv/config'
 import { CustomClient } from './lib/index.js'
 
 const client = new CustomClient()
-client.init().then(client => client.login(process.env.BOT_TOKEN))
+client
+  .init()
+  .then(c => {
+    c.login(process.env.BOT_TOKEN)
+
+    return c
+  })
+  .then(c => c.updateCommands())
 
 // Handle graceful exit
 process.on('SIGUSR2', () => {
