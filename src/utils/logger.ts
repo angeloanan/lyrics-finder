@@ -22,7 +22,7 @@ export interface SearchEntry {
 
 export const log = logger.info
 
-export async function logSearches(data: SearchEntry): Promise<void> {
+export function logSearches(data: SearchEntry): void {
   const { query, songTitle, songArtist, totalTime } = data.fields
   logger.info(
     { query, songTitle, songArtist, totalTime },

@@ -18,19 +18,19 @@ export class AutosearchStore {
    * @param user User
    * @returns {boolean} `true` when user is autosearching
    */
-  async userAutosearchStatus(user: User): Promise<boolean> {
+  userAutosearchStatus(user: User): boolean {
     return this.db.has(user.id)
   }
 
-  async enableUserAutosearch(user: User, details: AutosearchStoreValue): Promise<void> {
+  enableUserAutosearch(user: User, details: AutosearchStoreValue): void {
     this.db.set(user.id, details)
   }
 
-  async disableUserAutosearch(user: User): Promise<void> {
+  disableUserAutosearch(user: User): void {
     this.db.delete(user.id)
   }
 
-  async getUserAutosearchDetail(user: User): Promise<AutosearchStoreValue> {
+  getUserAutosearchDetail(user: User): AutosearchStoreValue {
     const data = this.db.get(user.id)
     if (data == null) {
       throw new Error('User does not have their autosearch on')
@@ -39,15 +39,15 @@ export class AutosearchStore {
     }
   }
 
-  async toggleUserAutosearch(user: User, details: AutosearchStoreValue) {
-    if (await this.userAutosearchStatus(user)) {
+  toggleUserAutosearch(user: User, details: AutosearchStoreValue) {
+    if (this.userAutosearchStatus(user)) {
       this.disableUserAutosearch(user)
     } else {
       this.enableUserAutosearch(user, details)
     }
   }
 
-  async autosearchTotal(): Promise<number> {
+  autosearchTotal(): number {
     return this.db.size
   }
 }
