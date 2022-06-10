@@ -34,7 +34,7 @@
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "execall": "^2.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.2.6",
     "pino": "^6.11.3",
     "pretty-ms": "^7.0.0",
     "quick.db": "^7.1.3",
